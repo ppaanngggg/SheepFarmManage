@@ -1,27 +1,21 @@
-from Tkinter import *
+from PyQt5.QtWidgets import *
 
 
-class App:
-    def __init__(self, master):
-        frame = Frame(master)
-        frame.pack()
+class CMainWindow(QWidget):
+    def __init__(self, parent=None):
+        super(CMainWindow, self).__init__(parent)
 
-        self.button = Button(
-            frame, text="quit", fg="red", command=frame.quit
-        )
-        self.button.pack(side=LEFT)
-
-        self.hi_there = Button(
-            frame, text="hello", command=self.say_hi
-        )
-        self.hi_there.pack(side=LEFT)
-
-    def say_hi(self):
-        print "hi there,everyone!"
+        self.main_layout=QVBoxLayout()
 
 
-root = Tk()
-app = App(root)
+        self.setLayout(self.main_layout)
 
-root.mainloop()
-root.destroy()
+if __name__ == '__main__':
+    import sys
+
+    app = QApplication(sys.argv)
+
+    main_window = CMainWindow()
+    main_window.show()
+
+    sys.exit(app.exec_())
