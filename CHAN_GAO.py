@@ -79,7 +79,7 @@ class CCHAN_GAO_Dialog(QDialog):
         self.layout_CHAN_GAO.addWidget(self.label_CHAN_GAO)
         self.layout_CHAN_GAO.addWidget(self.edit_CHAN_GAO)
         
-        self.label_HUO_GAO=QLabel('活羔(*)：')
+        self.label_HUO_GAO=QLabel('活羔数(*)：')
         self.edit_HUO_GAO=QLineEdit()
         self.layout_HUO_GAO=QHBoxLayout()
         self.layout_HUO_GAO.addWidget(self.label_HUO_GAO)
