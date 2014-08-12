@@ -16,6 +16,7 @@ create table chan_gao
 create table yang
 (
 	bian_hao char(10) not null primary key,
+	chan_gao_hao char(10) not null,
 	xing_bie char(5) not null,
 	er_hao char(10),
 	chu_sheng_zhong float(10,1),
@@ -24,10 +25,4 @@ create table yang
 	zhou_sui_zhong float(10,1),
 	qu_xiang char(20),
 	chan_gao_bian_hao char(10)
-);
-
-create table chan_yang_guan_xi
-(
-	chan_gao_hao char(10) not null,
-	bian_hao char(10) not null
 );
