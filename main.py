@@ -4,6 +4,8 @@ from add_CHAN_GAO import *
 from add_YANG import *
 from search_CHAN_GAO import *
 from search_YANG import *
+from edit_CHAN_GAO import *
+from edit_YANG import *
 
 
 class CMainWindow(QWidget):
@@ -35,10 +37,22 @@ class CMainWindow(QWidget):
         self.layout_search.addWidget(self.button_search_CHAN_GAO)
         self.layout_search.addWidget(self.button_search_YANG)
 
+        self.label_edit=QLabel('\n修改数据：')
+        self.button_edit_CHAN_GAO=QPushButton('修改产羔记录')
+        self.button_edit_CHAN_GAO.clicked.connect(self.button_edit_CHAN_GAO_clicked)
+        self.button_edit_YANG=QPushButton('修改湖羊数据')
+        self.button_edit_YANG.clicked.connect(self.button_edit_YANG_clicked)
+        self.layout_edit=QVBoxLayout()
+        self.layout_edit.setSpacing(10)
+        self.layout_edit.addWidget(self.label_edit)
+        self.layout_edit.addWidget(self.button_edit_CHAN_GAO)
+        self.layout_edit.addWidget(self.button_edit_YANG)
+
         self.layout_operate=QHBoxLayout()
         self.layout_operate.setSpacing(30)
         self.layout_operate.addLayout(self.layout_add)
         self.layout_operate.addLayout(self.layout_search)
+        self.layout_operate.addLayout(self.layout_edit)
 
         self.main_layout=QVBoxLayout()
         self.main_layout.addWidget(self.label_main)
@@ -62,6 +76,12 @@ class CMainWindow(QWidget):
     def button_search_YANG_clicked(self):
         self.search_YANG_dialog=CSearch_YANG_Dialog()
         self.search_YANG_dialog.show()
+
+    def button_edit_CHAN_GAO_clicked(self):
+        self.edit_CHAN_GAO_dialog=CEdit_CHAN_GAO_Dialog()
+
+    def button_edit_YANG_clicked(self):
+        self.edit_YANG_dialog=CEdit_YANG_Dialog()
 
 
 if __name__ == '__main__':
