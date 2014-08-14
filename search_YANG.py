@@ -3,7 +3,7 @@ from mysql.connector import errorcode
 from PyQt5.QtWidgets import *
 
 
-class CSearch_YANG_Dialog(QDialog):
+class CSearch_YANG_Dialog(QWidget):
     def __init__(self, parent=None):
         super(CSearch_YANG_Dialog, self).__init__(parent)
         
@@ -48,7 +48,7 @@ class CSearch_YANG_Dialog(QDialog):
             self.table_search_YANG.setColumnCount(YANG_info[0].__len__())
             self.table_search_YANG.setRowCount(YANG_info.__len__())
             self.table_search_YANG.setHorizontalHeaderLabels(
-                ['编号', '产羔号', '性别', '耳号', '出生重', '断奶重', '六月重', '周岁重', '去向', '产羔编号'])
+                ['编号', '棚号', '栏号', '产羔号', '性别', '耳号', '免疫号', '出生重', '断奶重', '六月重', '周岁重', '去向', '产羔编号'])
 
             for row in range(0, YANG_info.__len__()):
                 for col in range(0, YANG_info[0].__len__()):

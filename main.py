@@ -15,7 +15,7 @@ class CMainWindow(QWidget):
         self.label_main=QLabel('欢迎使用湖羊数据管理系统')
         self.label_main.setAlignment(QtCore.Qt.AlignHCenter)
 
-        self.label_add=QLabel('\n添加数据：')
+        self.label_add=QLabel('添加数据：')
         self.button_add_CHAN_GAO=QPushButton('添加产羔记录')
         self.button_add_CHAN_GAO.clicked.connect(self.button_add_CHAN_GAO_clicked)
         self.button_add_YANG=QPushButton('添加湖羊数据')
@@ -26,7 +26,7 @@ class CMainWindow(QWidget):
         self.layout_add.addWidget(self.button_add_CHAN_GAO)
         self.layout_add.addWidget(self.button_add_YANG)
 
-        self.label_search=QLabel('\n查询数据：')
+        self.label_search=QLabel('查询数据：')
         self.button_search_CHAN_GAO=QPushButton('查询产羔记录')
         self.button_search_CHAN_GAO.clicked.connect(self.button_search_CHAN_GAO_clicked)
         self.button_search_YANG=QPushButton('查询湖羊数据')
@@ -37,7 +37,7 @@ class CMainWindow(QWidget):
         self.layout_search.addWidget(self.button_search_CHAN_GAO)
         self.layout_search.addWidget(self.button_search_YANG)
 
-        self.label_edit=QLabel('\n修改数据：')
+        self.label_edit=QLabel('修改数据：')
         self.button_edit_CHAN_GAO=QPushButton('修改产羔记录')
         self.button_edit_CHAN_GAO.clicked.connect(self.button_edit_CHAN_GAO_clicked)
         self.button_edit_YANG=QPushButton('修改湖羊数据')
@@ -48,11 +48,32 @@ class CMainWindow(QWidget):
         self.layout_edit.addWidget(self.button_edit_CHAN_GAO)
         self.layout_edit.addWidget(self.button_edit_YANG)
 
+        self.label_sheet=QLabel('生成表格：')
+        self.button_sheet_CHAN_GAO_JI_LU=QPushButton('产羔记录表')
+        self.button_sheet_CHAN_GAO_JI_LU.clicked.connect(self.button_sheet_CHAN_GAO_JI_LU_clicked)
+        self.button_sheet_CHENG_ZHONG_JI_LU=QPushButton('称重记录表')
+        self.button_sheet_CHENG_ZHONG_JI_LU.clicked.connect(self.button_sheet_CHENG_ZHONG_JI_LU_clicked)
+        self.button_sheet_YU_ZHONG_JI_LU=QPushButton('育种记录表')
+        self.button_sheet_YU_ZHONG_JI_LU.clicked.connect(self.button_sheet_YU_ZHONG_JI_LU_clicked)
+        self.button_sheet_ZHONG_MU_YANG_HOU_YI=QPushButton('种母羊后裔表')
+        self.button_sheet_ZHONG_MU_YANG_HOU_YI.clicked.connect(self.button_sheet_ZHONG_MU_YANG_HOU_YI_clicked)
+        self.button_sheet_ZHONG_GONG_YANG_HOU_YI=QPushButton('种公羊后裔表')
+        self.button_sheet_ZHONG_GONG_YANG_HOU_YI.clicked.connect(self.button_sheet_ZHONG_GONG_YANG_HOU_YI_clicked)
+        self.layout_sheet=QVBoxLayout()
+        self.layout_sheet.setSpacing(10)
+        self.layout_sheet.addWidget(self.label_sheet)
+        self.layout_sheet.addWidget(self.button_sheet_CHAN_GAO_JI_LU)
+        self.layout_sheet.addWidget(self.button_sheet_CHENG_ZHONG_JI_LU)
+        self.layout_sheet.addWidget(self.button_sheet_YU_ZHONG_JI_LU)
+        self.layout_sheet.addWidget(self.button_sheet_ZHONG_MU_YANG_HOU_YI)
+        self.layout_sheet.addWidget(self.button_sheet_ZHONG_GONG_YANG_HOU_YI)
+
         self.layout_operate=QHBoxLayout()
         self.layout_operate.setSpacing(30)
         self.layout_operate.addLayout(self.layout_add)
         self.layout_operate.addLayout(self.layout_search)
         self.layout_operate.addLayout(self.layout_edit)
+        self.layout_operate.addLayout(self.layout_sheet)
 
         self.main_layout=QVBoxLayout()
         self.main_layout.addWidget(self.label_main)
@@ -83,6 +104,20 @@ class CMainWindow(QWidget):
     def button_edit_YANG_clicked(self):
         self.edit_YANG_dialog=CEdit_YANG_Dialog()
 
+    def button_sheet_CHAN_GAO_JI_LU_clicked(self):
+        pass
+
+    def button_sheet_CHENG_ZHONG_JI_LU_clicked(self):
+        pass
+
+    def button_sheet_YU_ZHONG_JI_LU_clicked(self):
+        pass
+
+    def button_sheet_ZHONG_MU_YANG_HOU_YI_clicked(self):
+        pass
+
+    def button_sheet_ZHONG_GONG_YANG_HOU_YI_clicked(self):
+        pass
 
 if __name__ == '__main__':
     import sys

@@ -16,9 +16,12 @@ create table chan_gao
 create table yang
 (
 	bian_hao char(10) not null primary key,
+	peng_hao char(5),
+	lan_hao char(5),
 	chan_gao_hao char(10) not null,
 	xing_bie char(5) not null,
 	er_hao char(10),
+	mian_yi_hao char(10),
 	chu_sheng_zhong float(10,1),
 	duan_nai_zhong float(10,1),
 	liu_yue_zhong float(10,1),

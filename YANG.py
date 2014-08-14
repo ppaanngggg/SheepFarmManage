@@ -12,6 +12,18 @@ class CYANG_Dialog(QDialog):
         self.layout_BIAN_HAO.addWidget(self.label_BIAN_HAO)
         self.layout_BIAN_HAO.addWidget(self.edit_BIAN_HAO)
 
+        self.label_PENG_HAO = QLabel('棚号：')
+        self.edit_PENG_HAO = QLineEdit()
+        self.layout_PENG_HAO = QHBoxLayout()
+        self.layout_PENG_HAO.addWidget(self.label_PENG_HAO)
+        self.layout_PENG_HAO.addWidget(self.edit_PENG_HAO)
+
+        self.label_LAN_HAO = QLabel('栏号：')
+        self.edit_LAN_HAO = QLineEdit()
+        self.layout_LAN_HAO = QHBoxLayout()
+        self.layout_LAN_HAO.addWidget(self.label_LAN_HAO)
+        self.layout_LAN_HAO.addWidget(self.edit_LAN_HAO)
+
         self.label_CHAN_GAO_HAO = QLabel('产羔号(*)：')
         self.edit_CHAN_GAO_HAO = QLineEdit()
         self.layout_CHAN_GAO_HAO = QHBoxLayout()
@@ -29,6 +41,12 @@ class CYANG_Dialog(QDialog):
         self.layout_ER_HAO = QHBoxLayout()
         self.layout_ER_HAO.addWidget(self.label_ER_HAO)
         self.layout_ER_HAO.addWidget(self.edit_ER_HAO)
+
+        self.label_MIAN_YI_HAO = QLabel('免疫号：')
+        self.edit_MIAN_YI_HAO = QLineEdit()
+        self.layout_MIAN_YI_HAO = QHBoxLayout()
+        self.layout_MIAN_YI_HAO.addWidget(self.label_MIAN_YI_HAO)
+        self.layout_MIAN_YI_HAO.addWidget(self.edit_MIAN_YI_HAO)
 
         self.label_CHU_SHENG_ZHONG = QLabel('出生重：')
         self.edit_CHU_SHENG_ZHONG = QLineEdit()
@@ -68,9 +86,12 @@ class CYANG_Dialog(QDialog):
 
         self.layout_YANG_dialog = QVBoxLayout()
         self.layout_YANG_dialog.addLayout(self.layout_BIAN_HAO)
+        self.layout_YANG_dialog.addLayout(self.layout_PENG_HAO)
+        self.layout_YANG_dialog.addLayout(self.layout_LAN_HAO)
         self.layout_YANG_dialog.addLayout(self.layout_CHAN_GAO_HAO)
         self.layout_YANG_dialog.addLayout(self.layout_XING_BIE)
         self.layout_YANG_dialog.addLayout(self.layout_ER_HAO)
+        self.layout_YANG_dialog.addLayout(self.layout_MIAN_YI_HAO)
         self.layout_YANG_dialog.addLayout(self.layout_CHU_SHENG_ZHONG)
         self.layout_YANG_dialog.addLayout(self.layout_DUAN_NAI_ZHONG)
         self.layout_YANG_dialog.addLayout(self.layout_LIU_YUE_ZHONG)
@@ -95,6 +116,14 @@ class CYANG_Dialog(QDialog):
                 QMessageBox.information(self, '输入错误', '编号为必填项。')
                 return False
 
+            if self.edit_PENG_HAO.text() and not self.edit_PENG_HAO.text().isspace():
+                add_YANG_index += 'peng_hao,'
+                add_YANG_values += '"'+self.edit_PENG_HAO.text() + '",'
+
+            if self.edit_LAN_HAO.text() and not self.edit_LAN_HAO.text().isspace():
+                add_YANG_index += 'lan_hao,'
+                add_YANG_values += '"'+self.edit_LAN_HAO.text() + '",'
+
             if self.edit_CHAN_GAO_HAO.text() and not self.edit_CHAN_GAO_HAO.text().isspace():
                 add_YANG_index += 'chan_gao_hao,'
                 add_YANG_values += '"'+self.edit_CHAN_GAO_HAO.text() + '",'
@@ -112,6 +141,10 @@ class CYANG_Dialog(QDialog):
             if self.edit_ER_HAO.text() and not self.edit_ER_HAO.text().isspace():
                 add_YANG_index += 'er_hao,'
                 add_YANG_values += '"'+self.edit_ER_HAO.text() + '",'
+
+            if self.edit_MIAN_YI_HAO.text() and not self.edit_MIAN_YI_HAO.text().isspace():
+                add_YANG_index += 'mian_yi_hao,'
+                add_YANG_values += '"'+self.edit_MIAN_YI_HAO.text() + '",'
 
             if self.edit_CHU_SHENG_ZHONG.text() and not self.edit_CHU_SHENG_ZHONG.text().isspace():
                 add_YANG_index += 'chu_sheng_zhong,'

@@ -3,7 +3,7 @@ from mysql.connector import errorcode
 from PyQt5.QtWidgets import *
 
 
-class CSearch_CHAN_GAO_Dialog(QDialog):
+class CSearch_CHAN_GAO_Dialog(QWidget):
     def __init__(self, parent=None):
         super(CSearch_CHAN_GAO_Dialog, self).__init__(parent)
 
