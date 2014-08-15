@@ -6,7 +6,11 @@ from search_CHAN_GAO import *
 from search_YANG import *
 from edit_CHAN_GAO import *
 from edit_YANG import *
-
+from sheet_CHAN_GAO_JI_LU import *
+from sheet_CHENG_ZHONG_JI_LU import *
+from sheet_YU_ZHONG_JI_LU import *
+from sheet_ZHONG_MU_YANG_HOU_YI import *
+from sheet_ZHONG_GONG_YANG_HOU_YI import *
 
 class CMainWindow(QWidget):
     def __init__(self, parent=None):
@@ -105,19 +109,19 @@ class CMainWindow(QWidget):
         self.edit_YANG_dialog=CEdit_YANG_Dialog()
 
     def button_sheet_CHAN_GAO_JI_LU_clicked(self):
-        pass
+        self.sheet_CHAN_GAO_JI_LU_dialog=CSheet_CHAN_GAO_JI_LU_Dialog()
 
     def button_sheet_CHENG_ZHONG_JI_LU_clicked(self):
-        pass
+        self.sheet_CHENG_ZHONG_JI_LU_dialog=CSheet_CHENG_ZHONG_JI_LU_Dialog()
 
     def button_sheet_YU_ZHONG_JI_LU_clicked(self):
-        pass
+        self.sheet_YU_ZHONG_JI_LU_dialog=CSheet_YU_ZHONG_JI_LU_Dialog()
 
     def button_sheet_ZHONG_MU_YANG_HOU_YI_clicked(self):
-        pass
+        self.sheet_ZHONG_MU_YANG_HOU_YI_dialog=CSheet_ZHONG_MU_YANG_HOU_YI_Dialog()
 
     def button_sheet_ZHONG_GONG_YANG_HOU_YI_clicked(self):
-        pass
+        self.sheet_ZHONG_GONG_YANG_HOU_YI_dialog=CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog()
 
 if __name__ == '__main__':
     import sys
