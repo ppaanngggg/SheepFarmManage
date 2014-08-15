@@ -1,30 +1,21 @@
 import mysql.connector
 from mysql.connector import errorcode
-from PyQt5.QtWidgets import *
+from sheet import *
 
 
-class CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog(QWidget):
+class CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog(CSheet):
     def __init__(self, parent=None):
         super(CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog, self).__init__(parent)
         text, ok = QInputDialog.getText(self, '种公羊后裔表', '请输入公羊号：', QLineEdit.Normal)
 
         if ok and text and not text.isspace():
-            self.table_sheet_ZHONG_GONG_YANG_HOU_YI = QTableWidget()
-            self.table_sheet_ZHONG_GONG_YANG_HOU_YI.setEditTriggers(QAbstractItemView.NoEditTriggers)
-            self.table_sheet_ZHONG_GONG_YANG_HOU_YI.setColumnCount(9)
-            self.table_sheet_ZHONG_GONG_YANG_HOU_YI.setHorizontalHeaderLabels(
+            self.table_sheet.setColumnCount(9)
+            self.table_sheet.setHorizontalHeaderLabels(
                 ['与配母羊', '产羔', '活羔', '羊羔编号', '羊羔性别', '羊羔出生重', '羊羔断奶重', '羊羔六月重', '羊羔去向'])
-            self.table_sheet_ZHONG_GONG_YANG_HOU_YI.setRowCount(1)
+            self.table_sheet.setRowCount(1)
 
             self.sheet_ZHONG_GONG_YANG_HOU_YI(text)
-
-            self.button_sheet_ZHONG_GONG_YANG_HOU_YI = QPushButton('输出表格')
-
-            self.layout_sheet_ZHONG_GONG_YANG_HOU_YI = QVBoxLayout()
-            self.layout_sheet_ZHONG_GONG_YANG_HOU_YI.addWidget(self.table_sheet_ZHONG_GONG_YANG_HOU_YI)
-            self.layout_sheet_ZHONG_GONG_YANG_HOU_YI.addWidget(self.button_sheet_ZHONG_GONG_YANG_HOU_YI)
-
-            self.setLayout(self.layout_sheet_ZHONG_GONG_YANG_HOU_YI)
+            
             self.setWindowTitle('种公羊后裔表')
             self.show()
         else:
@@ -43,8 +34,8 @@ class CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog(QWidget):
                 print(CHAN_GAO_info_item)
                 for index in range(1, 4):
                     if CHAN_GAO_info_item[index]:
-                        self.table_sheet_ZHONG_GONG_YANG_HOU_YI.setItem(
-                            self.table_sheet_ZHONG_GONG_YANG_HOU_YI.rowCount() - 1,
+                        self.table_sheet.setItem(
+                            self.table_sheet.rowCount() - 1,
                             index - 1,
                             QTableWidgetItem(str(CHAN_GAO_info_item[index])))
                 cursor_YANG.execute(
@@ -55,16 +46,16 @@ class CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog(QWidget):
                     while YANG_info_item is not None:
                         for index in range(0, YANG_info_item.__len__()):
                             if YANG_info_item[index]:
-                                self.table_sheet_ZHONG_GONG_YANG_HOU_YI.setItem(
-                                    self.table_sheet_ZHONG_GONG_YANG_HOU_YI.rowCount() - 1,
+                                self.table_sheet.setItem(
+                                    self.table_sheet.rowCount() - 1,
                                     index + 3,
                                     QTableWidgetItem(str(YANG_info_item[index])))
-                        self.table_sheet_ZHONG_GONG_YANG_HOU_YI.setRowCount(
-                            self.table_sheet_ZHONG_GONG_YANG_HOU_YI.rowCount() + 1)
+                        self.table_sheet.setRowCount(
+                            self.table_sheet.rowCount() + 1)
                         YANG_info_item = cursor_YANG.fetchone()
                 else:
-                    self.table_sheet_ZHONG_GONG_YANG_HOU_YI.setRowCount(
-                        self.table_sheet_ZHONG_GONG_YANG_HOU_YI.rowCount() + 1)
+                    self.table_sheet.setRowCount(
+                        self.table_sheet.rowCount() + 1)
             cursor_CHAN_GAO.close()
             cursor_YANG.close()
             cnx.close()

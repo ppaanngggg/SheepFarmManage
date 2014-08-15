@@ -1,29 +1,20 @@
 import mysql.connector
 from mysql.connector import errorcode
-from PyQt5.QtWidgets import *
+from sheet import *
 
 
-class CSheet_CHAN_GAO_JI_LU_Dialog(QWidget):
+class CSheet_CHAN_GAO_JI_LU_Dialog(CSheet):
     def __init__(self, parent=None):
         super(CSheet_CHAN_GAO_JI_LU_Dialog, self).__init__(parent)
 
-        self.table_sheet_CHAN_GAO_JI_LU = QTableWidget()
-        self.table_sheet_CHAN_GAO_JI_LU.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        self.table_sheet_CHAN_GAO_JI_LU.setColumnCount(14)
-        self.table_sheet_CHAN_GAO_JI_LU.setHorizontalHeaderLabels(
+        self.table_sheet.setColumnCount(14)
+        self.table_sheet.setHorizontalHeaderLabels(
             ['棚号', '栏号', '母羊号', '公羊号', '胎次', '配种日期', '产羔日期', '产羔数', '活羔数', '羊羔编号', '羊羔性别',
              '羊羔出生重', '羊羔断奶重', '断奶日期'])
-        self.table_sheet_CHAN_GAO_JI_LU.setRowCount(1)
+        self.table_sheet.setRowCount(1)
+        
         self.sheet_CHAN_GAO_JI_LU()
 
-        self.button_sheet_CHAN_GAO_JI_LU = QPushButton('输出表格')
-        self.button_sheet_CHAN_GAO_JI_LU.clicked.connect(self.export_sheet_CHAN_GAO_JI_LU)
-
-        self.layout_sheet_CHAN_GAO_JI_LU = QVBoxLayout()
-        self.layout_sheet_CHAN_GAO_JI_LU.addWidget(self.table_sheet_CHAN_GAO_JI_LU)
-        self.layout_sheet_CHAN_GAO_JI_LU.addWidget(self.button_sheet_CHAN_GAO_JI_LU)
-
-        self.setLayout(self.layout_sheet_CHAN_GAO_JI_LU)
         self.setWindowTitle('产羔记录表')
         self.show()
 
@@ -38,12 +29,12 @@ class CSheet_CHAN_GAO_JI_LU_Dialog(QWidget):
                 print(CHAN_GAO_info_item)
                 for index in range(1, CHAN_GAO_info_item.__len__() - 1):
                     if CHAN_GAO_info_item[index]:
-                        self.table_sheet_CHAN_GAO_JI_LU.setItem(self.table_sheet_CHAN_GAO_JI_LU.rowCount() - 1,
+                        self.table_sheet.setItem(self.table_sheet.rowCount() - 1,
                                                                 index - 1,
                                                                 QTableWidgetItem(str(CHAN_GAO_info_item[index])))
                 if CHAN_GAO_info_item[CHAN_GAO_info_item.__len__() - 1]:
-                    self.table_sheet_CHAN_GAO_JI_LU.setItem(self.table_sheet_CHAN_GAO_JI_LU.rowCount() - 1,
-                                                            self.table_sheet_CHAN_GAO_JI_LU.columnCount() - 1,
+                    self.table_sheet.setItem(self.table_sheet.rowCount() - 1,
+                                                            self.table_sheet.columnCount() - 1,
                                                             QTableWidgetItem(str(
                                                                 CHAN_GAO_info_item[CHAN_GAO_info_item.__len__() - 1])))
                 cursor_YANG.execute(
@@ -54,13 +45,13 @@ class CSheet_CHAN_GAO_JI_LU_Dialog(QWidget):
                     while YANG_info_item is not None:
                         for index in range(0, YANG_info_item.__len__()):
                             if YANG_info_item[index]:
-                                self.table_sheet_CHAN_GAO_JI_LU.setItem(self.table_sheet_CHAN_GAO_JI_LU.rowCount() - 1,
-                                                                        self.table_sheet_CHAN_GAO_JI_LU.columnCount() - 5 + index,
+                                self.table_sheet.setItem(self.table_sheet.rowCount() - 1,
+                                                                        self.table_sheet.columnCount() - 5 + index,
                                                                         QTableWidgetItem(str(YANG_info_item[index])))
-                        self.table_sheet_CHAN_GAO_JI_LU.setRowCount(self.table_sheet_CHAN_GAO_JI_LU.rowCount() + 1)
+                        self.table_sheet.setRowCount(self.table_sheet.rowCount() + 1)
                         YANG_info_item=cursor_YANG.fetchone()
                 else:
-                    self.table_sheet_CHAN_GAO_JI_LU.setRowCount(self.table_sheet_CHAN_GAO_JI_LU.rowCount() + 1)
+                    self.table_sheet.setRowCount(self.table_sheet.rowCount() + 1)
 
             cursor_CHAN_GAO.close()
             cursor_YANG.close()
@@ -74,7 +65,3 @@ class CSheet_CHAN_GAO_JI_LU_Dialog(QWidget):
                 QMessageBox.information(self, '数据库错误', '表单不存在。')
             else:
                 QMessageBox.information(self, '数据库错误', str(err))
-
-
-    def export_sheet_CHAN_GAO_JI_LU(self):
-        pass
