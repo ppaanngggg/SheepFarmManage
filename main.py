@@ -86,6 +86,81 @@ class CMainWindow(QWidget):
         self.setLayout(self.main_layout)
         self.setWindowTitle('湖羊数据管理系统')
 
+        self.test_database()
+
+    def test_database(self):
+        try:
+            cnx=mysql.connector.connect(user='root')
+            cursor=cnx.cursor()
+
+            try:
+                cnx.database='test'
+            except mysql.connector.Error as err:
+                if err.errno==errorcode.ER_BAD_DB_ERROR:
+                    try:
+                        cursor.execute('create database test character set gbk')
+                        cnx.database='test'
+                    except mysql.connector.Error as err:
+                        QMessageBox.information(self, '数据库错误', str(err))
+                else:
+                    QMessageBox.information(self, '数据库错误', str(err))
+
+            add_table_chan_gao='''
+                create table chan_gao
+                (
+                    chan_gao_hao char(10) not null primary key,
+                    peng_hao char(5) not null,
+                    lan_hao char(5) not null,
+                    mu_yang_hao char(10) not null,
+                    gong_yang_hao char(10) not null,
+                    tai_ci int,
+                    pei_zhong_ri_qi date,
+                    chan_gao_ri_qi date not null,
+                    chan_gao int not null,
+                    huo_gao int not null,
+                    duan_nai_ri_qi date
+                );
+            '''
+            try:
+                cursor.execute(add_table_chan_gao)
+            except mysql.connector.Error as err:
+                if err.errno==errorcode.ER_TABLE_EXISTS_ERROR:
+                    print('table_chan_gao 存在。')
+                else:
+                    QMessageBox.information(self, '数据库错误', str(err))
+
+            add_table_yang='''
+                create table yang
+                (
+                    bian_hao char(10) not null primary key,
+                    peng_hao char(5),
+                    lan_hao char(5),
+                    chan_gao_hao char(10) not null,
+                    xing_bie char(5) not null,
+                    er_hao char(10),
+                    mian_yi_hao char(10),
+                    chu_sheng_zhong float(10,1),
+                    duan_nai_zhong float(10,1),
+                    liu_yue_zhong float(10,1),
+                    zhou_sui_zhong float(10,1),
+                    qu_xiang char(20),
+                    chan_gao_bian_hao char(10)
+                );
+            '''
+            try:
+                cursor.execute(add_table_yang)
+            except mysql.connector.Error as err:
+                if err.errno==errorcode.ER_TABLE_EXISTS_ERROR:
+                    print('table_yang 存在。')
+                else:
+                    QMessageBox.information(self, '数据库错误', str(err))
+
+            cursor.close()
+            cnx.close()
+
+        except mysql.connector.Error as err:
+            QMessageBox.information(self, '数据库错误', str(err))
+
     def button_add_CHAN_GAO_clicked(self):
         self.add_CHAN_GAO_dialog=CAdd_CHAN_GAO_Dialog()
         self.add_CHAN_GAO_dialog.show()
