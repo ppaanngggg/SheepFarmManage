@@ -11,9 +11,10 @@ class CSheet_CHENG_ZHONG_JI_LU_Dialog(CSheet):
 
         if ok and text and not text.isspace():
             self.table_sheet.setColumnCount(17)
-            self.table_sheet.setHorizontalHeaderLabels(
-                ['栏号', '出生日期', '性别', '耳号', '出生重', '第一次称重日期', '第一次称重重量', '日增量', '月增量', '第二次称重日期', '第二次称重重量', '日增量',
-                 '月增量', '第三次称重日期', '第三次称重重量', '日增量', '月增量'])
+            self.sheet_header=['栏号', '出生日期', '性别', '耳号', '出生重', '第一次称重日期', '第一次称重重量', '日增量',
+                               '月增量', '第二次称重日期', '第二次称重重量', '日增量', '月增量', '第三次称重日期',
+                               '第三次称重重量', '日增量', '月增量']
+            self.table_sheet.setHorizontalHeaderLabels(self.sheet_header)
             self.table_sheet.setRowCount(1)
 
             self.sheet_CHENG_ZHONG_JI_LU(text)

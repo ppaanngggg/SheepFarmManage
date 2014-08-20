@@ -8,8 +8,9 @@ class CSheet_YU_ZHONG_JI_LU_Dialog(CSheet):
         super(CSheet_YU_ZHONG_JI_LU_Dialog, self).__init__(parent)
 
         self.table_sheet.setColumnCount(10)
-        self.table_sheet.setHorizontalHeaderLabels(
-            ['耳号', '免疫号', '出生日期', '母亲号', '父亲号', '同胞数', '出生重', '断奶重', '六月重', '周岁重'])
+        self.sheet_header=['耳号', '免疫号', '出生日期', '母亲号', '父亲号', '同胞数', '出生重', '断奶重', '六月重',
+                           '周岁重']
+        self.table_sheet.setHorizontalHeaderLabels(self.sheet_header)
         self.table_sheet.setRowCount(1)
 
         self.sheet_YU_ZHONG_JI_LU()

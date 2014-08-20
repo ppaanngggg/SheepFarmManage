@@ -10,8 +10,9 @@ class CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog(CSheet):
 
         if ok and text and not text.isspace():
             self.table_sheet.setColumnCount(9)
-            self.table_sheet.setHorizontalHeaderLabels(
-                ['与配母羊', '产羔', '活羔', '羊羔编号', '羊羔性别', '羊羔出生重', '羊羔断奶重', '羊羔六月重', '羊羔去向'])
+            self.sheet_header=['与配母羊', '产羔', '活羔', '羊羔编号', '羊羔性别', '羊羔出生重', '羊羔断奶重', '羊羔六月重',
+                               '羊羔去向']
+            self.table_sheet.setHorizontalHeaderLabels(self.sheet_header)
             self.table_sheet.setRowCount(1)
 
             self.sheet_ZHONG_GONG_YANG_HOU_YI(text)

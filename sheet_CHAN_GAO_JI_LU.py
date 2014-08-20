@@ -8,9 +8,9 @@ class CSheet_CHAN_GAO_JI_LU_Dialog(CSheet):
         super(CSheet_CHAN_GAO_JI_LU_Dialog, self).__init__(parent)
 
         self.table_sheet.setColumnCount(14)
-        self.table_sheet.setHorizontalHeaderLabels(
-            ['棚号', '栏号', '母羊号', '公羊号', '胎次', '配种日期', '产羔日期', '产羔数', '活羔数', '羊羔编号', '羊羔性别',
-             '羊羔出生重', '羊羔断奶重', '断奶日期'])
+        self.sheet_header=['棚号', '栏号', '母羊号', '公羊号', '胎次', '配种日期', '产羔日期', '产羔数', '活羔数',
+                           '羊羔编号', '羊羔性别', '羊羔出生重', '羊羔断奶重', '断奶日期']
+        self.table_sheet.setHorizontalHeaderLabels(self.sheet_header)
         self.table_sheet.setRowCount(1)
         
         self.sheet_CHAN_GAO_JI_LU()
