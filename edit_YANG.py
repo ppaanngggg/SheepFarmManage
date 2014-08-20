@@ -18,7 +18,7 @@ class CEdit_YANG_Dialog(CYANG_Dialog):
                 if YANG_info[0][3]:
                     self.edit_CHAN_GAO_HAO.setText(YANG_info[0][3])
                 if YANG_info[0][4]:
-                    self.edit_XING_BIE.setText(YANG_info[0][4])
+                    self.edit_XING_BIE.setCurrentText(YANG_info[0][4])
                 if YANG_info[0][5]:
                     self.edit_ER_HAO.setText(YANG_info[0][5])
                 if YANG_info[0][6]:

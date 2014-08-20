@@ -31,7 +31,9 @@ class CYANG_Dialog(QDialog):
         self.layout_CHAN_GAO_HAO.addWidget(self.edit_CHAN_GAO_HAO)
 
         self.label_XING_BIE = QLabel('性别(*)：')
-        self.edit_XING_BIE = QLineEdit()
+        # self.edit_XING_BIE = QLineEdit()
+        self.edit_XING_BIE = QComboBox()
+        self.edit_XING_BIE.addItems(['母','公'])
         self.layout_XING_BIE = QHBoxLayout()
         self.layout_XING_BIE.addWidget(self.label_XING_BIE)
         self.layout_XING_BIE.addWidget(self.edit_XING_BIE)
@@ -131,9 +133,9 @@ class CYANG_Dialog(QDialog):
                 QMessageBox.information(self, '输入错误', '产羔号为必填项。')
                 return False
 
-            if self.edit_XING_BIE.text() and not self.edit_XING_BIE.text().isspace():
+            if self.edit_XING_BIE.currentText() and not self.edit_XING_BIE.currentText().isspace():
                 add_YANG_index += 'xing_bie,'
-                add_YANG_values += '"'+self.edit_XING_BIE.text() + '",'
+                add_YANG_values += '"'+self.edit_XING_BIE.currentText() + '",'
             else:
                 QMessageBox.information(self, '输入错误', '性别为必填项。')
                 return False
