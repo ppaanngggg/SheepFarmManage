@@ -10,7 +10,7 @@ class CSheet_ZHONG_MU_YANG_HOU_YI_Dialog(CSheet):
 
         if ok and text and not text.isspace():
             self.table_sheet.setColumnCount(9)
-            self.sheet_header=['与配公羊', '产羔', '活羔', '羊羔编号', '羊羔性别', '羊羔出生重', '羊羔断奶重', '羊羔六月重',
+            self.sheet_header=['与配公羊', '胎次', '产羔', '活羔', '羊羔编号', '羊羔性别', '羊羔出生重', '羊羔断奶重', '羊羔六月重',
                                '羊羔去向']
             self.table_sheet.setHorizontalHeaderLabels(self.sheet_header)
             self.table_sheet.setRowCount(1)
@@ -30,10 +30,11 @@ class CSheet_ZHONG_MU_YANG_HOU_YI_Dialog(CSheet):
             cursor_YANG = cnx.cursor(buffered=True)
 
             cursor_CHAN_GAO.execute(
-                'select chan_gao_hao,gong_yang_hao,chan_gao,huo_gao from chan_gao where mu_yang_hao="' + text + '"')
+                'select chan_gao_hao,gong_yang_hao,tai_ci,chan_gao,huo_gao from chan_gao where mu_yang_hao="'
+                + text + '"')
             for CHAN_GAO_info_item in cursor_CHAN_GAO:
                 print(CHAN_GAO_info_item)
-                for index in range(1, 4):
+                for index in range(1, 5):
                     if CHAN_GAO_info_item[index]:
                         self.table_sheet.setItem(
                             self.table_sheet.rowCount() - 1,
@@ -49,7 +50,7 @@ class CSheet_ZHONG_MU_YANG_HOU_YI_Dialog(CSheet):
                             if YANG_info_item[index]:
                                 self.table_sheet.setItem(
                                     self.table_sheet.rowCount() - 1,
-                                    index + 3,
+                                    index + 4,
                                     QTableWidgetItem(str(YANG_info_item[index])))
                         self.table_sheet.setRowCount(
                             self.table_sheet.rowCount() + 1)

@@ -44,12 +44,6 @@ class CYANG_Dialog(QDialog):
         self.layout_ER_HAO.addWidget(self.label_ER_HAO)
         self.layout_ER_HAO.addWidget(self.edit_ER_HAO)
 
-        self.label_MIAN_YI_HAO = QLabel('免疫号：')
-        self.edit_MIAN_YI_HAO = QLineEdit()
-        self.layout_MIAN_YI_HAO = QHBoxLayout()
-        self.layout_MIAN_YI_HAO.addWidget(self.label_MIAN_YI_HAO)
-        self.layout_MIAN_YI_HAO.addWidget(self.edit_MIAN_YI_HAO)
-
         self.label_CHU_SHENG_ZHONG = QLabel('出生重：')
         self.edit_CHU_SHENG_ZHONG = QLineEdit()
         self.layout_CHU_SHENG_ZHONG = QHBoxLayout()
@@ -80,12 +74,6 @@ class CYANG_Dialog(QDialog):
         self.layout_QU_XIANG.addWidget(self.label_QU_XIANG)
         self.layout_QU_XIANG.addWidget(self.edit_QU_XIANG)
 
-        self.label_CHAN_GAO_BIAN_HAO = QLabel('产羔编号(母羊号或公羊号)：')
-        self.edit_CHAN_GAO_BIAN_HAO = QLineEdit()
-        self.layout_CHAN_GAO_BIAN_HAO = QHBoxLayout()
-        self.layout_CHAN_GAO_BIAN_HAO.addWidget(self.label_CHAN_GAO_BIAN_HAO)
-        self.layout_CHAN_GAO_BIAN_HAO.addWidget(self.edit_CHAN_GAO_BIAN_HAO)
-
         self.layout_YANG_dialog = QVBoxLayout()
         self.layout_YANG_dialog.addLayout(self.layout_BIAN_HAO)
         self.layout_YANG_dialog.addLayout(self.layout_PENG_HAO)
@@ -93,13 +81,11 @@ class CYANG_Dialog(QDialog):
         self.layout_YANG_dialog.addLayout(self.layout_CHAN_GAO_HAO)
         self.layout_YANG_dialog.addLayout(self.layout_XING_BIE)
         self.layout_YANG_dialog.addLayout(self.layout_ER_HAO)
-        self.layout_YANG_dialog.addLayout(self.layout_MIAN_YI_HAO)
         self.layout_YANG_dialog.addLayout(self.layout_CHU_SHENG_ZHONG)
         self.layout_YANG_dialog.addLayout(self.layout_DUAN_NAI_ZHONG)
         self.layout_YANG_dialog.addLayout(self.layout_LIU_YUE_ZHONG)
         self.layout_YANG_dialog.addLayout(self.layout_ZHOU_SUI_ZHONG)
         self.layout_YANG_dialog.addLayout(self.layout_QU_XIANG)
-        self.layout_YANG_dialog.addLayout(self.layout_CHAN_GAO_BIAN_HAO)
 
         self.setLayout(self.layout_YANG_dialog)
 
@@ -144,10 +130,6 @@ class CYANG_Dialog(QDialog):
                 add_YANG_index += 'er_hao,'
                 add_YANG_values += '"'+self.edit_ER_HAO.text() + '",'
 
-            if self.edit_MIAN_YI_HAO.text() and not self.edit_MIAN_YI_HAO.text().isspace():
-                add_YANG_index += 'mian_yi_hao,'
-                add_YANG_values += '"'+self.edit_MIAN_YI_HAO.text() + '",'
-
             if self.edit_CHU_SHENG_ZHONG.text() and not self.edit_CHU_SHENG_ZHONG.text().isspace():
                 add_YANG_index += 'chu_sheng_zhong,'
                 add_YANG_values += self.edit_CHU_SHENG_ZHONG.text() + ','
@@ -167,10 +149,6 @@ class CYANG_Dialog(QDialog):
             if self.edit_QU_XIANG.text() and not self.edit_QU_XIANG.text().isspace():
                 add_YANG_index += 'qu_xiang,'
                 add_YANG_values += '"'+self.edit_QU_XIANG.text() + '",'
-
-            if self.edit_CHAN_GAO_BIAN_HAO.text() and not self.edit_CHAN_GAO_BIAN_HAO.text().isspace():
-                add_YANG_index += 'chan_gao_bian_hao,'
-                add_YANG_values += '"'+self.edit_CHAN_GAO_BIAN_HAO.text() + '",'
 
             add_YANG_index = add_YANG_index[:-1]
             add_YANG_values = add_YANG_values[:-1]

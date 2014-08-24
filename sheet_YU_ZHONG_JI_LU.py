@@ -25,7 +25,7 @@ class CSheet_YU_ZHONG_JI_LU_Dialog(CSheet):
             cursor_YANG = cnx.cursor(buffered=True)
 
             cursor_YANG.execute(
-                'select chan_gao_hao,er_hao,mian_yi_hao,chu_sheng_zhong,duan_nai_zhong,liu_yue_zhong,zhou_sui_zhong' +
+                'select chan_gao_hao,er_hao,bian_hao,chu_sheng_zhong,duan_nai_zhong,liu_yue_zhong,zhou_sui_zhong' +
                 ' from yang')
 
             for YANG_info_item in cursor_YANG:
