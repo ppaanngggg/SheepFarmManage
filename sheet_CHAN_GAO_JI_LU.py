@@ -26,7 +26,7 @@ class CSheet_CHAN_GAO_JI_LU_Dialog(CSheet):
 
             cursor_CHAN_GAO.execute('select * from chan_gao')
             for CHAN_GAO_info_item in cursor_CHAN_GAO:
-                print(CHAN_GAO_info_item)
+                # print(CHAN_GAO_info_item)
                 for index in range(1, CHAN_GAO_info_item.__len__() - 1):
                     if CHAN_GAO_info_item[index]:
                         self.table_sheet.setItem(self.table_sheet.rowCount() - 1,

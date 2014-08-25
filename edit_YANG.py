@@ -74,7 +74,7 @@ class CEdit_YANG_Dialog(CYANG_Dialog):
 
             for YANG_info_item in cursor:
                 YANG_info.append(YANG_info_item)
-            print(YANG_info)
+            # print(YANG_info)
 
             cursor.close()
             cnx.close()

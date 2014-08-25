@@ -27,7 +27,7 @@ class CSearch_YANG_Dialog(QWidget):
             YANG_info = []
             for YANG_info_item in cursor:
                 YANG_info.append(YANG_info_item)
-            print(YANG_info)
+            # print(YANG_info)
 
             cursor.close()
             cnx.close()

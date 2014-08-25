@@ -153,7 +153,7 @@ class CYANG_Dialog(QDialog):
             add_YANG_index = add_YANG_index[:-1]
             add_YANG_values = add_YANG_values[:-1]
             add_YANG=add_YANG_index + add_YANG_values + ');'
-            print(add_YANG)
+            # print(add_YANG)
 
             cursor.execute(add_YANG)
             cnx.commit()

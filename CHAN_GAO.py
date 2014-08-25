@@ -225,7 +225,7 @@ class CCHAN_GAO_Dialog(QDialog):
             add_CHAN_GAO_index = add_CHAN_GAO_index[:-1]
             add_CHAN_GAO_values = add_CHAN_GAO_values[:-1]
             add_CHAN_GAO=add_CHAN_GAO_index + add_CHAN_GAO_values + ');'
-            print(add_CHAN_GAO)
+            # print(add_CHAN_GAO)
 
             cursor.execute(add_CHAN_GAO)
             cnx.commit()
@@ -243,6 +243,8 @@ class CCHAN_GAO_Dialog(QDialog):
             elif err.errno == errorcode.ER_DUP_ENTRY:
                 QMessageBox.information(self, '数据库错误', '产羔号重复。')
             elif err.errno ==errorcode.ER_BAD_FIELD_ERROR:
+                QMessageBox.information(self, '数据库错误', '数据类型有误。')
+            elif err.errno == errorcode.ER_TRUNCATED_WRONG_VALUE_FOR_FIELD:
                 QMessageBox.information(self, '数据库错误', '数据类型有误。')
             else:
                 QMessageBox.information(self, '数据库错误', str(err))

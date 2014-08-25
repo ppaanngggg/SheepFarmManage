@@ -33,7 +33,7 @@ class CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog(CSheet):
                 'select chan_gao_hao,mu_yang_hao,tai_ci,chan_gao,huo_gao from chan_gao where gong_yang_hao="'
                 + text + '"')
             for CHAN_GAO_info_item in cursor_CHAN_GAO:
-                print(CHAN_GAO_info_item)
+                # print(CHAN_GAO_info_item)
                 for index in range(1, 5):
                     if CHAN_GAO_info_item[index]:
                         self.table_sheet.setItem(

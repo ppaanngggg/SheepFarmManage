@@ -28,7 +28,7 @@ class CSearch_CHAN_GAO_Dialog(QWidget):
             CHAN_GAO_info = []
             for CHAN_GAO_info_item in cursor:
                 CHAN_GAO_info.append(CHAN_GAO_info_item)
-            print(CHAN_GAO_info)
+            # print(CHAN_GAO_info)
 
             cursor.close()
             cnx.close()

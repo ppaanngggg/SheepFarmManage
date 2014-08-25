@@ -81,7 +81,7 @@ class CEdit_CHAN_GAO_Dialog(CCHAN_GAO_Dialog):
 
             for CHAN_GAO_info_item in cursor:
                 CHAN_GAO_info.append(CHAN_GAO_info_item)
-            print(CHAN_GAO_info)
+            # print(CHAN_GAO_info)
 
             cursor.close()
             cnx.close()

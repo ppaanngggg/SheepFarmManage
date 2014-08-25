@@ -20,7 +20,7 @@ class CSheet(QWidget):
     def save_sheet(self):
         str_path, str_filter=QFileDialog.getSaveFileName(self,'保存表格','','(*.xlsx)')
 
-        print(str_path)
+        # print(str_path)
 
         if str_path:
             if str_path[-5:]!='.xlsx':

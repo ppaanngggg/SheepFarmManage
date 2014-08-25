@@ -29,7 +29,7 @@ class CSheet_YU_ZHONG_JI_LU_Dialog(CSheet):
                 ' from yang')
 
             for YANG_info_item in cursor_YANG:
-                print(YANG_info_item)
+                # print(YANG_info_item)
                 current_row = self.table_sheet.rowCount() - 1
                 if YANG_info_item[1]:
                     self.table_sheet.setItem(current_row, 0, QTableWidgetItem(YANG_info_item[1]))
