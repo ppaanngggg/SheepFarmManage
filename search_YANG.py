@@ -8,6 +8,7 @@ class CSearch_YANG_Dialog(QWidget):
         super(CSearch_YANG_Dialog, self).__init__(parent)
         
         self.table_search_YANG=QTableWidget()
+        self.table_search_YANG.setEditTriggers(QAbstractItemView.NoEditTriggers)
         
         YANG_info=self.get_YANG_info()
         self.output_YANG_info(YANG_info)

@@ -12,6 +12,7 @@ from sheet_CHENG_ZHONG_JI_LU import *
 from sheet_YU_ZHONG_JI_LU import *
 from sheet_ZHONG_MU_YANG_HOU_YI import *
 from sheet_ZHONG_GONG_YANG_HOU_YI import *
+from avg_CHU_SHENG_DUAN_NAI_ZHONG import *
 
 
 class CMainWindow(QWidget):
@@ -77,12 +78,21 @@ class CMainWindow(QWidget):
         self.layout_sheet.addWidget(self.button_sheet_ZHONG_MU_YANG_HOU_YI)
         self.layout_sheet.addWidget(self.button_sheet_ZHONG_GONG_YANG_HOU_YI)
 
+        self.label_statistic=QLabel('数据统计：')
+        self.button_avg_CHU_SHENG_DUAN_NAI_ZHONG=QPushButton('出生重，断奶重平均值')
+        self.button_avg_CHU_SHENG_DUAN_NAI_ZHONG.clicked.connect(self.button_avg_CHU_SHENG_DUAN_NAI_ZHONG_clicked)
+        self.layout_statistic=QVBoxLayout()
+        self.layout_statistic.setSpacing(10)
+        self.layout_statistic.addWidget(self.label_statistic)
+        self.layout_statistic.addWidget(self.button_avg_CHU_SHENG_DUAN_NAI_ZHONG)
+
         self.layout_operate = QHBoxLayout()
         self.layout_operate.setSpacing(30)
         self.layout_operate.addLayout(self.layout_add)
         self.layout_operate.addLayout(self.layout_search)
         self.layout_operate.addLayout(self.layout_edit)
         self.layout_operate.addLayout(self.layout_sheet)
+        self.layout_operate.addLayout(self.layout_statistic)
 
         self.main_layout = QVBoxLayout()
         self.main_layout.addWidget(self.label_main)
@@ -205,6 +215,9 @@ class CMainWindow(QWidget):
 
     def button_sheet_ZHONG_GONG_YANG_HOU_YI_clicked(self):
         self.sheet_ZHONG_GONG_YANG_HOU_YI_dialog = CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog()
+
+    def button_avg_CHU_SHENG_DUAN_NAI_ZHONG_clicked(self):
+        avg_CHU_SHENG_DUAN_NAI_ZHONG(self)
 
 
 if __name__ == '__main__':
