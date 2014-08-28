@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import *
 import xlsxwriter
 
-class CSheet(QWidget):
+class CSheet(QDialog):
     def __init__(self, parent=None):
         super(CSheet, self).__init__(parent)
         

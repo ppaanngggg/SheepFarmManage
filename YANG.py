@@ -91,7 +91,10 @@ class CYANG_Dialog(QDialog):
 
     def add_YANG_info(self):
         try:
-            cnx = mysql.connector.connect(user='root', database='test')
+            cnx = mysql.connector.connect(user=self.USER,
+                                          password=self.PASSWD,
+                                          database='pang_da_nong_ye',
+                                          host='115.29.168.27')
             cursor = cnx.cursor()
 
             add_YANG_index = 'insert into yang ('

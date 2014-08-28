@@ -19,7 +19,7 @@ def cell2str(book, cell):
         return str(cell.value)
 
 
-def add_from_sheet(str_path, QWidget):
+def add_from_sheet(str_path, main_window):
     book = xlrd.open_workbook(str_path, formatting_info=True)
 
     mysql_query = []
@@ -155,14 +155,17 @@ def add_from_sheet(str_path, QWidget):
                                     query_values = query_values[:-1]
                                     mysql_query.append(query_index + query_values + ');')
                 except:
-                    QMessageBox.information(QWidget, '表格数据有误',
+                    QMessageBox.information(main_window, '表格数据有误',
                                             '表单' + str(sheet.name) + '第' + str(row_index + 1) + '行左右存在错误')
                     return
 
     # print(mysql_query)
     if mysql_query:
         try:
-            cnx = mysql.connector.connect(user='root', database='test')
+            cnx = mysql.connector.connect(user=main_window.USER,
+                                          password=main_window.PASSWD,
+                                          database='pang_da_nong_ye',
+                                          host='115.29.168.27')
             cursor = cnx.cursor()
             for query in mysql_query:
                 try:
@@ -171,20 +174,20 @@ def add_from_sheet(str_path, QWidget):
                 except mysql.connector.Error as err:
                     print(query)
                     if err.errno == errorcode.ER_PARSE_ERROR:
-                        QMessageBox.information(QWidget, '数据库错误', '无数据输入。\n' + query)
+                        QMessageBox.information(main_window, '数据库错误', '无数据输入。\n' + query)
                     elif err.errno == errorcode.ER_DUP_ENTRY:
-                        QMessageBox.information(QWidget, '数据库错误', '产羔号或编号重复。\n' + query)
+                        QMessageBox.information(main_window, '数据库错误', '产羔号或编号重复。\n' + query)
                     elif err.errno == errorcode.ER_BAD_FIELD_ERROR:
-                        QMessageBox.information(QWidget, '数据库错误', '数据类型有误。\n' + query)
+                        QMessageBox.information(main_window, '数据库错误', '数据类型有误。\n' + query)
             cursor.close()
             cnx.close()
-            QMessageBox.information(QWidget, '从表格导入数据', '导入成功。')
+            QMessageBox.information(main_window, '从表格导入数据', '导入成功。')
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-                QMessageBox.information(QWidget, '数据库错误', '登录数据库错误。')
+                QMessageBox.information(main_window, '数据库错误', '登录数据库错误。')
             elif err.errno == errorcode.ER_BAD_DB_ERROR:
-                QMessageBox.information(QWidget, '数据库错误', '数据库不存在。')
+                QMessageBox.information(main_window, '数据库错误', '数据库不存在。')
             else:
-                QMessageBox.information(QWidget, '数据库错误', str(err))
+                QMessageBox.information(main_window, '数据库错误', str(err))
     else:
-        QMessageBox.information(QWidget, '从表格导入数据', '无数据。')
+        QMessageBox.information(main_window, '从表格导入数据', '无数据。')

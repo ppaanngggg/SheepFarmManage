@@ -7,6 +7,9 @@ class CSheet_CHAN_GAO_JI_LU_Dialog(CSheet):
     def __init__(self, parent=None):
         super(CSheet_CHAN_GAO_JI_LU_Dialog, self).__init__(parent)
 
+        self.USER=parent.USER
+        self.PASSWD=parent.PASSWD
+
         self.table_sheet.setColumnCount(14)
         self.sheet_header=['棚号', '栏号', '母羊号', '公羊号', '胎次', '配种日期', '产羔日期', '产羔数', '活羔数',
                            '羊羔编号', '羊羔性别', '羊羔出生重', '羊羔断奶重', '断奶日期']
@@ -20,7 +23,10 @@ class CSheet_CHAN_GAO_JI_LU_Dialog(CSheet):
 
     def sheet_CHAN_GAO_JI_LU(self):
         try:
-            cnx = mysql.connector.connect(user='root', database='test')
+            cnx = mysql.connector.connect(user=self.USER,
+                                          password=self.PASSWD,
+                                          database='pang_da_nong_ye',
+                                          host='115.29.168.27')
             cursor_CHAN_GAO = cnx.cursor(buffered=True)
             cursor_YANG = cnx.cursor(buffered=True)
 

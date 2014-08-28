@@ -4,6 +4,9 @@ class CEdit_YANG_Dialog(CYANG_Dialog):
     def __init__(self, parent=None):
         super(CEdit_YANG_Dialog, self).__init__(parent)
 
+        self.USER=parent.USER
+        self.PASSWD=parent.PASSWD
+
         text, ok = QInputDialog.getText(self, '修改湖羊数据','请输入编号：', QLineEdit.Normal)
 
         if ok and text and not text.isspace():
@@ -22,19 +25,15 @@ class CEdit_YANG_Dialog(CYANG_Dialog):
                 if YANG_info[0][5]:
                     self.edit_ER_HAO.setText(YANG_info[0][5])
                 if YANG_info[0][6]:
-                    self.edit_MIAN_YI_HAO.setText(YANG_info[0][6])
+                    self.edit_CHU_SHENG_ZHONG.setText(str(YANG_info[0][6]))
                 if YANG_info[0][7]:
-                    self.edit_CHU_SHENG_ZHONG.setText(str(YANG_info[0][7]))
+                    self.edit_DUAN_NAI_ZHONG.setText(str(YANG_info[0][7]))
                 if YANG_info[0][8]:
-                    self.edit_DUAN_NAI_ZHONG.setText(str(YANG_info[0][8]))
+                    self.edit_LIU_YUE_ZHONG.setText(str(YANG_info[0][8]))
                 if YANG_info[0][9]:
-                    self.edit_LIU_YUE_ZHONG.setText(str(YANG_info[0][9]))
+                    self.edit_ZHOU_SUI_ZHONG.setText(str(YANG_info[0][9]))
                 if YANG_info[0][10]:
-                    self.edit_ZHOU_SUI_ZHONG.setText(str(YANG_info[0][10]))
-                if YANG_info[0][11]:
-                    self.edit_QU_XIANG.setText(str(YANG_info[0][11]))
-                if YANG_info[0][12]:
-                    self.edit_CHAN_GAO_BIAN_HAO.setText(str(YANG_info[0][12]))
+                    self.edit_QU_XIANG.setText(str(YANG_info[0][10]))
 
                 self.label_edit_YANG_dialog = QLabel('\n注：(*)为必填项\n')
                 self.button_edit_YANG_dialog = QPushButton('修改湖羊数据')
@@ -68,7 +67,10 @@ class CEdit_YANG_Dialog(CYANG_Dialog):
     def get_YANG_info(self,text):
         YANG_info=[]
         try:
-            cnx = mysql.connector.connect(user='root', database='test')
+            cnx = mysql.connector.connect(user=self.USER,
+                                          password=self.PASSWD,
+                                          database='pang_da_nong_ye',
+                                          host='115.29.168.27')
             cursor = cnx.cursor()
             cursor.execute('select * from yang where bian_hao="'+text+'"')
 
@@ -91,7 +93,10 @@ class CEdit_YANG_Dialog(CYANG_Dialog):
 
     def delete_YANG_info(self,text):
         try:
-            cnx = mysql.connector.connect(user='root', database='test')
+            cnx = mysql.connector.connect(user=self.USER,
+                                          password=self.PASSWD,
+                                          database='pang_da_nong_ye',
+                                          host='115.29.168.27')
             cursor = cnx.cursor()
             cursor.execute('delete from yang where bian_hao="'+text+'"')
             cnx.commit()

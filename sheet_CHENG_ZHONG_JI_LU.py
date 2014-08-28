@@ -7,6 +7,10 @@ from datetime import *
 class CSheet_CHENG_ZHONG_JI_LU_Dialog(CSheet):
     def __init__(self, parent=None):
         super(CSheet_CHENG_ZHONG_JI_LU_Dialog, self).__init__(parent)
+
+        self.USER=parent.USER
+        self.PASSWD=parent.PASSWD
+
         text, ok = QInputDialog.getText(self, '称重记录表', '请输入棚号：', QLineEdit.Normal)
 
         if ok and text and not text.isspace():
@@ -28,7 +32,10 @@ class CSheet_CHENG_ZHONG_JI_LU_Dialog(CSheet):
 
     def sheet_CHENG_ZHONG_JI_LU(self, text):
         try:
-            cnx = mysql.connector.connect(user='root', database='test')
+            cnx = mysql.connector.connect(user=self.USER,
+                                          password=self.PASSWD,
+                                          database='pang_da_nong_ye',
+                                          host='115.29.168.27')
             cursor_CHAN_GAO = cnx.cursor(buffered=True)
             cursor_YANG = cnx.cursor(buffered=True)
 

@@ -6,6 +6,10 @@ from sheet import *
 class CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog(CSheet):
     def __init__(self, parent=None):
         super(CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog, self).__init__(parent)
+
+        self.USER=parent.USER
+        self.PASSWD=parent.PASSWD
+
         text, ok = QInputDialog.getText(self, '种公羊后裔表', '请输入公羊号：', QLineEdit.Normal)
 
         if ok and text and not text.isspace():
@@ -25,7 +29,10 @@ class CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog(CSheet):
 
     def sheet_ZHONG_GONG_YANG_HOU_YI(self, text):
         try:
-            cnx = mysql.connector.connect(user='root', database='test')
+            cnx = mysql.connector.connect(user=self.USER,
+                                          password=self.PASSWD,
+                                          database='pang_da_nong_ye',
+                                          host='115.29.168.27')
             cursor_CHAN_GAO = cnx.cursor(buffered=True)
             cursor_YANG = cnx.cursor(buffered=True)
 

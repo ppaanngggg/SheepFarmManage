@@ -3,15 +3,15 @@ from mysql.connector import errorcode
 from PyQt5.QtWidgets import *
 
 
-class CSearch_YANG_Dialog(QWidget):
+class CSearch_YANG_Dialog(QDialog):
     def __init__(self, parent=None):
         super(CSearch_YANG_Dialog, self).__init__(parent)
+
+        self.USER=parent.USER
+        self.PASSWD=parent.PASSWD
         
         self.table_search_YANG=QTableWidget()
         self.table_search_YANG.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        
-        YANG_info=self.get_YANG_info()
-        self.output_YANG_info(YANG_info)
 
         self.layout_search_YANG_dialog=QVBoxLayout()
         self.layout_search_YANG_dialog.addWidget(self.table_search_YANG)
@@ -19,9 +19,19 @@ class CSearch_YANG_Dialog(QWidget):
         self.setLayout(self.layout_search_YANG_dialog)
         self.setWindowTitle('查询湖羊数据')
 
+        YANG_info=self.get_YANG_info()
+        if YANG_info:
+            self.output_YANG_info(YANG_info)
+            self.show()
+        else:
+            QMessageBox.information(self, '查询湖羊数据', '无湖羊数据。')
+
     def get_YANG_info(self):
         try:
-            cnx = mysql.connector.connect(user='root', database='test')
+            cnx = mysql.connector.connect(user=self.USER,
+                                          password=self.PASSWD,
+                                          database='pang_da_nong_ye',
+                                          host='115.29.168.27')
             cursor = cnx.cursor()
             cursor.execute('select * from yang')
 
@@ -45,15 +55,12 @@ class CSearch_YANG_Dialog(QWidget):
                 QMessageBox.information(self, '数据库错误', str(err))
 
     def output_YANG_info(self,YANG_info):
-        if YANG_info:
-            self.table_search_YANG.setColumnCount(YANG_info[0].__len__())
-            self.table_search_YANG.setRowCount(YANG_info.__len__())
-            self.table_search_YANG.setHorizontalHeaderLabels(
-                ['编号', '棚号', '栏号', '产羔号', '性别', '耳号', '出生重', '断奶重', '六月重', '周岁重', '去向'])
+        self.table_search_YANG.setColumnCount(YANG_info[0].__len__())
+        self.table_search_YANG.setRowCount(YANG_info.__len__())
+        self.table_search_YANG.setHorizontalHeaderLabels(
+            ['编号', '棚号', '栏号', '产羔号', '性别', '耳号', '出生重', '断奶重', '六月重', '周岁重', '去向'])
 
-            for row in range(0, YANG_info.__len__()):
-                for col in range(0, YANG_info[0].__len__()):
-                    if YANG_info[row][col]:
-                        self.table_search_YANG.setItem(row, col, QTableWidgetItem(str(YANG_info[row][col])))
-        else:
-            QMessageBox.information(self, '查询湖羊数据', '无湖羊数据。')
+        for row in range(0, YANG_info.__len__()):
+            for col in range(0, YANG_info[0].__len__()):
+                if YANG_info[row][col]:
+                    self.table_search_YANG.setItem(row, col, QTableWidgetItem(str(YANG_info[row][col])))

@@ -9,6 +9,9 @@ class CEdit_CHAN_GAO_Dialog(CCHAN_GAO_Dialog):
     def __init__(self, parent=None):
         super(CEdit_CHAN_GAO_Dialog, self).__init__(parent)
 
+        self.USER=parent.USER
+        self.PASSWD=parent.PASSWD
+
         text, ok = QInputDialog.getText(self, '修改产羔记录','请输入产羔号：', QLineEdit.Normal)
 
         if ok and text and not text.isspace():
@@ -75,7 +78,10 @@ class CEdit_CHAN_GAO_Dialog(CCHAN_GAO_Dialog):
     def get_CHAN_GAO_info(self,text):
         CHAN_GAO_info=[]
         try:
-            cnx = mysql.connector.connect(user='root', database='test')
+            cnx = mysql.connector.connect(user=self.USER,
+                                          password=self.PASSWD,
+                                          database='pang_da_nong_ye',
+                                          host='115.29.168.27')
             cursor = cnx.cursor()
             cursor.execute('select * from chan_gao where chan_gao_hao="'+text+'"')
 
@@ -98,7 +104,10 @@ class CEdit_CHAN_GAO_Dialog(CCHAN_GAO_Dialog):
 
     def delete_CHAN_GAO_info(self,text):
         try:
-            cnx = mysql.connector.connect(user='root', database='test')
+            cnx = mysql.connector.connect(user=self.USER,
+                                          password=self.PASSWD,
+                                          database='pang_da_nong_ye',
+                                          host='115.29.168.27')
             cursor = cnx.cursor()
             cursor.execute('delete from chan_gao where chan_gao_hao="'+text+'"')
             cnx.commit()

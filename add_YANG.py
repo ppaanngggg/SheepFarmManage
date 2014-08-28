@@ -5,6 +5,9 @@ class CAdd_YANG_Dialog(CYANG_Dialog):
     def __init__(self, parent=None):
         super(CAdd_YANG_Dialog, self).__init__(parent)
 
+        self.USER=parent.USER
+        self.PASSWD=parent.PASSWD
+
         self.label_add_YANG_dialog=QLabel('\n注：(*)为必填项\n')
 
         self.button_add_YANG_dialog=QPushButton('添加湖羊信息')
