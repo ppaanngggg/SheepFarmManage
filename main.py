@@ -122,7 +122,7 @@ class CMainWindow(QWidget):
                 cnx = mysql.connector.connect(user=user_and_passwd[0],
                                               password=user_and_passwd[1],
                                               database='pang_da_nong_ye',
-                                              host='115.29.168.27')
+                                              host='121.40.132.148')
                 cnx.close()
                 self.USER = user_and_passwd[0]
                 self.PASSWD = user_and_passwd[1]
