@@ -23,7 +23,7 @@ class CMainWindow(QWidget):
 
         self.USER = ''
         self.PASSWD = ''
-        self.HOST = '127.0.0.1121.40.132.148'
+        self.HOST = '127.0.0.1'
 
         if self.login_database() == True:
             self.label_main = QLabel('欢迎使用湖羊数据管理系统')
