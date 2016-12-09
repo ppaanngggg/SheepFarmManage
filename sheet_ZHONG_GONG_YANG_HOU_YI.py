@@ -32,7 +32,7 @@ class CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog(CSheet):
             cnx = mysql.connector.connect(user=self.USER,
                                           password=self.PASSWD,
                                           database='pang_da_nong_ye',
-                                          host='121.40.132.148')
+                                          host='self.HOST')
             cursor_CHAN_GAO = cnx.cursor(buffered=True)
             cursor_YANG = cnx.cursor(buffered=True)
 
