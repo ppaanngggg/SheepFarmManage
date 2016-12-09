@@ -11,7 +11,7 @@ def avg_CHU_SHENG_DUAN_NAI_ZHONG(main_window):
             cnx = mysql.connector.connect(user=main_window.USER,
                                           password=main_window.PASSWD,
                                           database='pang_da_nong_ye',
-                                          host='self.HOST')
+                                          host=self.HOST)
             cursor = cnx.cursor()
             cursor.execute(
                 'select chu_sheng_zhong,duan_nai_zhong from yang where chan_gao_hao in ' +

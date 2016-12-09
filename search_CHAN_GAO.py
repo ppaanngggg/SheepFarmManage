@@ -31,7 +31,7 @@ class CSearch_CHAN_GAO_Dialog(QDialog):
             cnx = mysql.connector.connect(user=self.USER,
                                           password=self.PASSWD,
                                           database='pang_da_nong_ye',
-                                          host='self.HOST')
+                                          host=self.HOST)
             cursor = cnx.cursor()
             cursor.execute('select * from chan_gao')
 

@@ -70,7 +70,7 @@ class CEdit_YANG_Dialog(CYANG_Dialog):
             cnx = mysql.connector.connect(user=self.USER,
                                           password=self.PASSWD,
                                           database='pang_da_nong_ye',
-                                          host='self.HOST')
+                                          host=self.HOST)
             cursor = cnx.cursor()
             cursor.execute('select * from yang where bian_hao="'+text+'"')
 
@@ -96,7 +96,7 @@ class CEdit_YANG_Dialog(CYANG_Dialog):
             cnx = mysql.connector.connect(user=self.USER,
                                           password=self.PASSWD,
                                           database='pang_da_nong_ye',
-                                          host='self.HOST')
+                                          host=self.HOST)
             cursor = cnx.cursor()
             cursor.execute('delete from yang where bian_hao="'+text+'"')
             cnx.commit()
