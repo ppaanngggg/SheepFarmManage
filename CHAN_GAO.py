@@ -124,7 +124,7 @@ class CCHAN_GAO_Dialog(QDialog):
             cnx = mysql.connector.connect(user=self.USER,
                                           password=self.PASSWD,
                                           database='pang_da_nong_ye',
-                                          host=self.HOST)
+                                          host='127.0.0.1')
             cursor = cnx.cursor()
 
             add_CHAN_GAO_index = 'insert into chan_gao ('

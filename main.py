@@ -23,7 +23,6 @@ class CMainWindow(QWidget):
 
         self.USER = ''
         self.PASSWD = ''
-        self.HOST = '127.0.0.1'
 
         if self.login_database() == True:
             self.label_main = QLabel('欢迎使用湖羊数据管理系统')
@@ -139,7 +138,7 @@ class CMainWindow(QWidget):
                 cnx = mysql.connector.connect(user=user_and_passwd[0],
                                               password=user_and_passwd[1],
                                               database='pang_da_nong_ye',
-                                              host=self.HOST)
+                                              host='127.0.0.1')
                 cnx.close()
                 self.USER = user_and_passwd[0]
                 self.PASSWD = user_and_passwd[1]

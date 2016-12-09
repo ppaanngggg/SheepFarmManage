@@ -81,7 +81,7 @@ class CEdit_CHAN_GAO_Dialog(CCHAN_GAO_Dialog):
             cnx = mysql.connector.connect(user=self.USER,
                                           password=self.PASSWD,
                                           database='pang_da_nong_ye',
-                                          host=self.HOST)
+                                          host='127.0.0.1')
             cursor = cnx.cursor()
             cursor.execute('select * from chan_gao where chan_gao_hao="'+text+'"')
 
@@ -107,7 +107,7 @@ class CEdit_CHAN_GAO_Dialog(CCHAN_GAO_Dialog):
             cnx = mysql.connector.connect(user=self.USER,
                                           password=self.PASSWD,
                                           database='pang_da_nong_ye',
-                                          host=self.HOST)
+                                          host='127.0.0.1')
             cursor = cnx.cursor()
             cursor.execute('delete from chan_gao where chan_gao_hao="'+text+'"')
             cnx.commit()

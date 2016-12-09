@@ -165,7 +165,7 @@ def add_from_sheet(str_path, main_window):
             cnx = mysql.connector.connect(user=main_window.USER,
                                           password=main_window.PASSWD,
                                           database='pang_da_nong_ye',
-                                          host=self.HOST)
+                                          host='127.0.0.1')
             cursor = cnx.cursor()
             for query in mysql_query:
                 try:
