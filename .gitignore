@@ -1,0 +1,5 @@
+#ignore these files
+
+.idea/*
+__pycache__/*
+._*
