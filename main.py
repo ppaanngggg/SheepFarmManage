@@ -22,6 +22,7 @@ from sheet_CHENG_ZHONG_JI_LU import CSheet_CHENG_ZHONG_JI_LU_Dialog
 from sheet_YU_ZHONG_JI_LU import CSheet_YU_ZHONG_JI_LU_Dialog
 from sheet_ZHONG_GONG_YANG_HOU_YI import CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog
 from sheet_ZHONG_MU_YANG_HOU_YI import CSheet_ZHONG_MU_YANG_HOU_YI_Dialog
+from utils.DATE import DateDialog
 from utils.login_database import CLogin_Database_Dialog
 
 logging.basicConfig(level=logging.INFO)
@@ -162,10 +163,21 @@ class CMainWindow(QWidget):
         """
 
         def button_search_CHAN_GAO_clicked():
-            self.search_CHAN_GAO_dialog = CSearch_CHAN_GAO_Dialog(self)
+            # 1. get begin end date
+            date_dialog = DateDialog(self)
+            if date_dialog.exec() == QDialog.Accepted:
+                begin_date, end_date = date_dialog.get_result()
+                self.search_CHAN_GAO_dialog = CSearch_CHAN_GAO_Dialog(
+                    begin_date, end_date, self
+                )
 
         def button_search_YANG_clicked():
-            self.search_YANG_dialog = CSearch_YANG_Dialog(self)
+            date_dialog = DateDialog(self)
+            if date_dialog.exec() == QDialog.Accepted:
+                begin_date, end_date = date_dialog.get_result()
+                self.search_YANG_dialog = CSearch_YANG_Dialog(
+                    begin_date, end_date, self
+                )
 
         _layout.addWidget(QLabel("查询数据："), 0, _col)
         _layout.addWidget(QLabel(), 1, _col)

@@ -1,10 +1,17 @@
 import mysql.connector
+from PyQt5.QtWidgets import (
+    QDialog,
+    QTableWidget,
+    QAbstractItemView,
+    QVBoxLayout,
+    QMessageBox,
+    QTableWidgetItem,
+)
 from mysql.connector import errorcode
-from PyQt5.QtWidgets import *
 
 
 class CSearch_YANG_Dialog(QDialog):
-    def __init__(self, parent=None):
+    def __init__(self, begin_date, end_date, parent=None):
         super(CSearch_YANG_Dialog, self).__init__(parent)
 
         self.USER = parent.USER
@@ -18,15 +25,17 @@ class CSearch_YANG_Dialog(QDialog):
 
         self.setLayout(layout)
         self.setWindowTitle("查询湖羊数据")
+        self.setMinimumWidth(800)
+        self.setMinimumHeight(600)
 
-        YANG_info = self.get_YANG_info()
+        YANG_info = self.get_YANG_info(begin_date, end_date)
         if YANG_info:
             self.output_YANG_info(YANG_info)
             self.show()
         else:
             QMessageBox.information(self, "查询湖羊数据", "无湖羊数据。")
 
-    def get_YANG_info(self):
+    def get_YANG_info(self, begin_date, end_date):
         try:
             cnx = mysql.connector.connect(
                 user=self.USER,
@@ -35,7 +44,17 @@ class CSearch_YANG_Dialog(QDialog):
                 host="127.0.0.1",
             )
             cursor = cnx.cursor()
-            cursor.execute("select * from yang")
+            cursor.execute(
+                """
+                SELECT t1.* 
+                FROM yang AS t1 JOIN chan_gao AS t2
+                ON t1.chan_gao_hao=t2.chan_gao_hao
+                WHERE t2.chan_gao_ri_qi>"{}" AND t2.chan_gao_ri_qi<"{}"
+                ORDER BY t2.chan_gao_ri_qi
+                """.format(
+                    begin_date, end_date
+                )
+            )
 
             YANG_info = []
             for YANG_info_item in cursor:

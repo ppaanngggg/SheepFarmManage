@@ -11,7 +11,7 @@ from mysql.connector import errorcode
 
 
 class CSearch_CHAN_GAO_Dialog(QDialog):
-    def __init__(self, parent=None):
+    def __init__(self, begin_date, end_date, parent=None):
         super(CSearch_CHAN_GAO_Dialog, self).__init__(parent)
 
         self.USER = parent.USER
@@ -25,15 +25,17 @@ class CSearch_CHAN_GAO_Dialog(QDialog):
 
         self.setLayout(layout)
         self.setWindowTitle("查询产羔记录")
+        self.setMinimumWidth(800)
+        self.setMinimumHeight(600)
 
-        CHAN_GAO_info = self.get_CHAN_GAO_info()
+        CHAN_GAO_info = self.get_CHAN_GAO_info(begin_date, end_date)
         if CHAN_GAO_info:
             self.output_CHAN_GAO_info(CHAN_GAO_info)
             self.show()
         else:
             QMessageBox.information(self, "查询产羔记录", "无产羔记录。")
 
-    def get_CHAN_GAO_info(self):
+    def get_CHAN_GAO_info(self, begin_date, end_date):
         try:
             cnx = mysql.connector.connect(
                 user=self.USER,
@@ -42,7 +44,15 @@ class CSearch_CHAN_GAO_Dialog(QDialog):
                 host="127.0.0.1",
             )
             cursor = cnx.cursor()
-            cursor.execute("select * from chan_gao")
+            cursor.execute(
+                """
+                SELECT * FROM chan_gao
+                WHERE chan_gao_ri_qi>="{}" AND chan_gao_ri_qi<="{}"
+                ORDER BY chan_gao_ri_qi
+                """.format(
+                    begin_date, end_date
+                )
+            )
 
             CHAN_GAO_info = []
             for CHAN_GAO_info_item in cursor:

@@ -12,6 +12,7 @@ create table chan_gao
 	huo_gao int not null,
 	duan_nai_ri_qi date
 );
+create index chan_gao_ri_qi_index on chan_gao(chan_gao_ri_qi)
 
 create table yang
 (
