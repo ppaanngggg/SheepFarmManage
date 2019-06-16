@@ -14,17 +14,15 @@ from PyQt5.QtWidgets import (
 from mysql.connector import errorcode
 
 from Add import CAdd_CHAN_GAO_Dialog, CAdd_YANG_Dialog, add_from_sheet
+from Edit import CEdit_YANG_Dialog, CEdit_CHAN_GAO_Dialog
+from Search import CSearch_YANG_Dialog, CSearch_CHAN_GAO_Dialog
 from avg_CHU_SHENG_DUAN_NAI_ZHONG import avg_CHU_SHENG_DUAN_NAI_ZHONG
-from edit_CHAN_GAO import CEdit_CHAN_GAO_Dialog
-from edit_YANG import CEdit_YANG_Dialog
-from login_database import CLogin_Database_Dialog
-from search_CHAN_GAO import CSearch_CHAN_GAO_Dialog
-from search_YANG import CSearch_YANG_Dialog
 from sheet_CHAN_GAO_JI_LU import CSheet_CHAN_GAO_JI_LU_Dialog
 from sheet_CHENG_ZHONG_JI_LU import CSheet_CHENG_ZHONG_JI_LU_Dialog
 from sheet_YU_ZHONG_JI_LU import CSheet_YU_ZHONG_JI_LU_Dialog
 from sheet_ZHONG_GONG_YANG_HOU_YI import CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog
 from sheet_ZHONG_MU_YANG_HOU_YI import CSheet_ZHONG_MU_YANG_HOU_YI_Dialog
+from utils.login_database import CLogin_Database_Dialog
 
 logging.basicConfig(level=logging.INFO)
 
@@ -46,31 +44,11 @@ class CMainWindow(QWidget):
         layout_plane.setHorizontalSpacing(30)
         self.setLayout(layout_plane)
 
-        # planeo
+        # plane
         self.create_add_plane(layout_plane)
+        self.create_search_plane(layout_plane)
+        self.create_edit_plane(layout_plane)
 
-        # self.label_search = QLabel("查询数据：")
-        # self.button_search_CHAN_GAO = QPushButton("查询产羔记录")
-        # self.button_search_CHAN_GAO.clicked.connect(self.button_search_CHAN_GAO_clicked)
-        # self.button_search_YANG = QPushButton("查询湖羊数据")
-        # self.button_search_YANG.clicked.connect(self.button_search_YANG_clicked)
-        # self.layout_search = QVBoxLayout()
-        # self.layout_search.setSpacing(10)
-        # self.layout_search.addWidget(self.label_search)
-        # self.layout_search.addWidget(self.button_search_CHAN_GAO)
-        # self.layout_search.addWidget(self.button_search_YANG)
-        #
-        # self.label_edit = QLabel("修改数据：")
-        # self.button_edit_CHAN_GAO = QPushButton("修改产羔记录")
-        # self.button_edit_CHAN_GAO.clicked.connect(self.button_edit_CHAN_GAO_clicked)
-        # self.button_edit_YANG = QPushButton("修改湖羊数据")
-        # self.button_edit_YANG.clicked.connect(self.button_edit_YANG_clicked)
-        # self.layout_edit = QVBoxLayout()
-        # self.layout_edit.setSpacing(10)
-        # self.layout_edit.addWidget(self.label_edit)
-        # self.layout_edit.addWidget(self.button_edit_CHAN_GAO)
-        # self.layout_edit.addWidget(self.button_edit_YANG)
-        #
         # self.label_sheet = QLabel("生成表格：")
         # self.button_sheet_CHAN_GAO_JI_LU = QPushButton("产羔记录表")
         # self.button_sheet_CHAN_GAO_JI_LU.clicked.connect(
@@ -178,17 +156,45 @@ class CMainWindow(QWidget):
         button_add_YANG.clicked.connect(button_add_YANG_clicked)
         _layout.addWidget(button_add_YANG, 4, _col)
 
-    def button_search_CHAN_GAO_clicked(self):
-        self.search_CHAN_GAO_dialog = CSearch_CHAN_GAO_Dialog(self)
+    def create_search_plane(self, _layout, _col=1):
+        """
+        搜索数据部分
+        """
 
-    def button_search_YANG_clicked(self):
-        self.search_YANG_dialog = CSearch_YANG_Dialog(self)
+        def button_search_CHAN_GAO_clicked():
+            self.search_CHAN_GAO_dialog = CSearch_CHAN_GAO_Dialog(self)
 
-    def button_edit_CHAN_GAO_clicked(self):
-        self.edit_CHAN_GAO_dialog = CEdit_CHAN_GAO_Dialog(self)
+        def button_search_YANG_clicked():
+            self.search_YANG_dialog = CSearch_YANG_Dialog(self)
 
-    def button_edit_YANG_clicked(self):
-        self.edit_YANG_dialog = CEdit_YANG_Dialog(self)
+        _layout.addWidget(QLabel("查询数据："), 0, _col)
+        _layout.addWidget(QLabel(), 1, _col)
+        button_search_CHAN_GAO = QPushButton("查询产羔记录")
+        button_search_CHAN_GAO.clicked.connect(button_search_CHAN_GAO_clicked)
+        _layout.addWidget(button_search_CHAN_GAO, 2, _col)
+        button_search_YANG = QPushButton("查询湖羊数据")
+        button_search_YANG.clicked.connect(button_search_YANG_clicked)
+        _layout.addWidget(button_search_YANG, 3, _col)
+
+    def create_edit_plane(self, _layout, _col=2):
+        """
+        修改数据部分
+        """
+
+        def button_edit_CHAN_GAO_clicked():
+            self.edit_CHAN_GAO_dialog = CEdit_CHAN_GAO_Dialog(self)
+
+        def button_edit_YANG_clicked():
+            self.edit_YANG_dialog = CEdit_YANG_Dialog(self)
+
+        _layout.addWidget(QLabel("修改数据："), 0, _col)
+        _layout.addWidget(QLabel(), 1, _col)
+        button_edit_CHAN_GAO = QPushButton("修改产羔记录")
+        button_edit_CHAN_GAO.clicked.connect(button_edit_CHAN_GAO_clicked)
+        _layout.addWidget(button_edit_CHAN_GAO, 2, _col)
+        button_edit_YANG = QPushButton("修改湖羊数据")
+        button_edit_YANG.clicked.connect(button_edit_YANG_clicked)
+        _layout.addWidget(button_edit_YANG, 3, _col)
 
     def button_sheet_CHAN_GAO_JI_LU_clicked(self):
         self.sheet_CHAN_GAO_JI_LU_dialog = CSheet_CHAN_GAO_JI_LU_Dialog(self)

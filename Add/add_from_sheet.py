@@ -56,7 +56,7 @@ def append_chan_gao_query(
     chan_gao_ri_qi = cell2date(sheet.cell(row_index, 6))
     chan_gao = cell2str(book, sheet.cell(row_index, 7))
     huo_gao = cell2str(book, sheet.cell(row_index, 8))
-    chan_gao_hao = str(chan_gao_ri_qi) + mu_yang_hao + gong_yang_hao
+    chan_gao_hao = "{}_{}_{}".format(chan_gao_ri_qi, mu_yang_hao, gong_yang_hao)
 
     query_index = "insert into chan_gao ("
     query_values = ") values ("
@@ -103,7 +103,15 @@ def append_chan_gao_query(
 
 
 def append_yang_query(
-    _query_list, book, sheet, row_index, row_offset, col_offset, chan_gao_hao
+    _query_list,
+    book,
+    sheet,
+    row_index,
+    row_offset,
+    col_offset,
+    chan_gao_hao,
+    peng_hao,
+    lan_hao,
 ):
     bian_hao = cell2str(book, sheet.cell(row_index + row_offset, 9 + col_offset * 3))
     if not bian_hao or bian_hao.isspace():
@@ -117,6 +125,12 @@ def append_yang_query(
     if bian_hao and not bian_hao.isspace():
         query_index += "bian_hao,"
         query_values += '"' + bian_hao + '",'
+    if peng_hao and not peng_hao.isspace():
+        query_index += "peng_hao,"
+        query_values += '"{}",'.format(peng_hao)
+    if lan_hao and not lan_hao.isspace():
+        query_index += "lan_hao,"
+        query_values += '"{}",'.format(lan_hao)
     if chan_gao_hao and not chan_gao_hao.isspace():
         query_index += "chan_gao_hao,"
         query_values += '"' + chan_gao_hao + '",'
@@ -198,6 +212,8 @@ def read_rows(_query_list, _book, _sheet):
                     row_offset,
                     col_offset,
                     chan_gao_hao,
+                    peng_hao,
+                    lan_hao,
                 )
 
 

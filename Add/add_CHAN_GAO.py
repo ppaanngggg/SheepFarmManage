@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QLabel, QPushButton, QMessageBox
 
-from CHAN_GAO import CCHAN_GAO_Dialog
+from utils.CHAN_GAO import CCHAN_GAO_Dialog
 
 
 class CAdd_CHAN_GAO_Dialog(CCHAN_GAO_Dialog):

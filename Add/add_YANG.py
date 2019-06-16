@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QLabel, QPushButton, QMessageBox
 
-from YANG import CYANG_Dialog
+from utils.YANG import CYANG_Dialog
 
 
 class CAdd_YANG_Dialog(CYANG_Dialog):
