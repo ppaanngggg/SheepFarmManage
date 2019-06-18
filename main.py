@@ -2,28 +2,28 @@ import logging
 
 import mysql.connector
 from PyQt5.QtWidgets import (
-    QWidget,
-    QLabel,
-    QGridLayout,
-    QDialog,
-    QMessageBox,
-    QFileDialog,
     QApplication,
+    QDialog,
+    QFileDialog,
+    QGridLayout,
+    QLabel,
+    QMessageBox,
     QPushButton,
+    QWidget,
 )
 from mysql.connector import errorcode
 
 from Add import CAdd_CHAN_GAO_Dialog, CAdd_YANG_Dialog, add_from_sheet
-from Edit import CEdit_YANG_Dialog, CEdit_CHAN_GAO_Dialog
-from Search import CSearch_YANG_Dialog, CSearch_CHAN_GAO_Dialog
-from avg_CHU_SHENG_DUAN_NAI_ZHONG import avg_CHU_SHENG_DUAN_NAI_ZHONG
-from sheet_CHAN_GAO_JI_LU import CSheet_CHAN_GAO_JI_LU_Dialog
-from sheet_CHENG_ZHONG_JI_LU import CSheet_CHENG_ZHONG_JI_LU_Dialog
-from sheet_YU_ZHONG_JI_LU import CSheet_YU_ZHONG_JI_LU_Dialog
-from sheet_ZHONG_GONG_YANG_HOU_YI import CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog
-from sheet_ZHONG_MU_YANG_HOU_YI import CSheet_ZHONG_MU_YANG_HOU_YI_Dialog
-from utils.DATE import DateDialog
-from utils.login_database import CLogin_Database_Dialog
+from Edit import CEdit_CHAN_GAO_Dialog, CEdit_YANG_Dialog
+from Search import CSearch_CHAN_GAO_Dialog, CSearch_YANG_Dialog
+from Sheet import (
+    CSheet_CHAN_GAO_JI_LU_Dialog,
+    CSheet_CHENG_ZHONG_JI_LU_Dialog,
+    CSheet_YU_ZHONG_JI_LU_Dialog,
+    CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog,
+    CSheet_ZHONG_MU_YANG_HOU_YI_Dialog,
+)
+from utils import CLogin_Database_Dialog, DateDialog
 
 logging.basicConfig(level=logging.INFO)
 
@@ -49,46 +49,7 @@ class CMainWindow(QWidget):
         self.create_add_plane(layout_plane)
         self.create_search_plane(layout_plane)
         self.create_edit_plane(layout_plane)
-
-        # self.label_sheet = QLabel("生成表格：")
-        # self.button_sheet_CHAN_GAO_JI_LU = QPushButton("产羔记录表")
-        # self.button_sheet_CHAN_GAO_JI_LU.clicked.connect(
-        #     self.button_sheet_CHAN_GAO_JI_LU_clicked
-        # )
-        # self.button_sheet_CHENG_ZHONG_JI_LU = QPushButton("称重记录表")
-        # self.button_sheet_CHENG_ZHONG_JI_LU.clicked.connect(
-        #     self.button_sheet_CHENG_ZHONG_JI_LU_clicked
-        # )
-        # self.button_sheet_YU_ZHONG_JI_LU = QPushButton("育种记录表")
-        # self.button_sheet_YU_ZHONG_JI_LU.clicked.connect(
-        #     self.button_sheet_YU_ZHONG_JI_LU_clicked
-        # )
-        # self.button_sheet_ZHONG_MU_YANG_HOU_YI = QPushButton("种母羊后裔表")
-        # self.button_sheet_ZHONG_MU_YANG_HOU_YI.clicked.connect(
-        #     self.button_sheet_ZHONG_MU_YANG_HOU_YI_clicked
-        # )
-        # self.button_sheet_ZHONG_GONG_YANG_HOU_YI = QPushButton("种公羊后裔表")
-        # self.button_sheet_ZHONG_GONG_YANG_HOU_YI.clicked.connect(
-        #     self.button_sheet_ZHONG_GONG_YANG_HOU_YI_clicked
-        # )
-        # self.layout_sheet = QVBoxLayout()
-        # self.layout_sheet.setSpacing(10)
-        # self.layout_sheet.addWidget(self.label_sheet)
-        # self.layout_sheet.addWidget(self.button_sheet_CHAN_GAO_JI_LU)
-        # self.layout_sheet.addWidget(self.button_sheet_CHENG_ZHONG_JI_LU)
-        # self.layout_sheet.addWidget(self.button_sheet_YU_ZHONG_JI_LU)
-        # self.layout_sheet.addWidget(self.button_sheet_ZHONG_MU_YANG_HOU_YI)
-        # self.layout_sheet.addWidget(self.button_sheet_ZHONG_GONG_YANG_HOU_YI)
-        #
-        # self.label_statistic = QLabel("数据统计：")
-        # self.button_avg_CHU_SHENG_DUAN_NAI_ZHONG = QPushButton("出生重，断奶重平均值")
-        # self.button_avg_CHU_SHENG_DUAN_NAI_ZHONG.clicked.connect(
-        #     self.button_avg_CHU_SHENG_DUAN_NAI_ZHONG_clicked
-        # )
-        # self.layout_statistic = QVBoxLayout()
-        # self.layout_statistic.setSpacing(10)
-        # self.layout_statistic.addWidget(self.label_statistic)
-        # self.layout_statistic.addWidget(self.button_avg_CHU_SHENG_DUAN_NAI_ZHONG)
+        self.create_sheet_plane(layout_plane)
 
         self.show()
 
@@ -208,27 +169,58 @@ class CMainWindow(QWidget):
         button_edit_YANG.clicked.connect(button_edit_YANG_clicked)
         _layout.addWidget(button_edit_YANG, 3, _col)
 
-    def button_sheet_CHAN_GAO_JI_LU_clicked(self):
-        self.sheet_CHAN_GAO_JI_LU_dialog = CSheet_CHAN_GAO_JI_LU_Dialog(self)
+    def create_sheet_plane(self, _layout, _col=3):
+        """
+        导出数据部分
+        """
 
-    def button_sheet_CHENG_ZHONG_JI_LU_clicked(self):
-        self.sheet_CHENG_ZHONG_JI_LU_dialog = CSheet_CHENG_ZHONG_JI_LU_Dialog(self)
+        def button_sheet_CHAN_GAO_JI_LU_clicked():
+            date_dialog = DateDialog(self)
+            if date_dialog.exec() == QDialog.Accepted:
+                begin_date, end_date = date_dialog.get_result()
+                self.sheet_CHAN_GAO_JI_LU_dialog = CSheet_CHAN_GAO_JI_LU_Dialog(
+                    begin_date, end_date, self
+                )
 
-    def button_sheet_YU_ZHONG_JI_LU_clicked(self):
-        self.sheet_YU_ZHONG_JI_LU_dialog = CSheet_YU_ZHONG_JI_LU_Dialog(self)
+        def button_sheet_CHENG_ZHONG_JI_LU_clicked():
+            self.sheet_CHENG_ZHONG_JI_LU_dialog = CSheet_CHENG_ZHONG_JI_LU_Dialog(self)
 
-    def button_sheet_ZHONG_MU_YANG_HOU_YI_clicked(self):
-        self.sheet_ZHONG_MU_YANG_HOU_YI_dialog = CSheet_ZHONG_MU_YANG_HOU_YI_Dialog(
-            self
+        def button_sheet_YU_ZHONG_JI_LU_clicked():
+            self.sheet_YU_ZHONG_JI_LU_dialog = CSheet_YU_ZHONG_JI_LU_Dialog(self)
+
+        def button_sheet_ZHONG_MU_YANG_HOU_YI_clicked():
+            self.sheet_ZHONG_MU_YANG_HOU_YI_dialog = CSheet_ZHONG_MU_YANG_HOU_YI_Dialog(
+                self
+            )
+
+        def button_sheet_ZHONG_GONG_YANG_HOU_YI_clicked():
+            self.sheet_ZHONG_GONG_YANG_HOU_YI_dialog = CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog(
+                self
+            )
+
+        _layout.addWidget(QLabel("生成表格："), 0, _col)
+        _layout.addWidget(QLabel(), 1, _col)
+        button_sheet_CHAN_GAO_JI_LU = QPushButton("产羔记录表")
+        button_sheet_CHAN_GAO_JI_LU.clicked.connect(button_sheet_CHAN_GAO_JI_LU_clicked)
+        _layout.addWidget(button_sheet_CHAN_GAO_JI_LU, 2, _col)
+        button_sheet_CHENG_ZHONG_JI_LU = QPushButton("称重记录表")
+        button_sheet_CHENG_ZHONG_JI_LU.clicked.connect(
+            button_sheet_CHENG_ZHONG_JI_LU_clicked
         )
-
-    def button_sheet_ZHONG_GONG_YANG_HOU_YI_clicked(self):
-        self.sheet_ZHONG_GONG_YANG_HOU_YI_dialog = CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog(
-            self
+        _layout.addWidget(button_sheet_CHENG_ZHONG_JI_LU, 3, _col)
+        button_sheet_YU_ZHONG_JI_LU = QPushButton("育种记录表")
+        button_sheet_YU_ZHONG_JI_LU.clicked.connect(button_sheet_YU_ZHONG_JI_LU_clicked)
+        _layout.addWidget(button_sheet_YU_ZHONG_JI_LU, 4, _col)
+        button_sheet_ZHONG_MU_YANG_HOU_YI = QPushButton("种母羊后裔表")
+        button_sheet_ZHONG_MU_YANG_HOU_YI.clicked.connect(
+            button_sheet_ZHONG_MU_YANG_HOU_YI_clicked
         )
-
-    def button_avg_CHU_SHENG_DUAN_NAI_ZHONG_clicked(self):
-        avg_CHU_SHENG_DUAN_NAI_ZHONG(self)
+        _layout.addWidget(button_sheet_ZHONG_MU_YANG_HOU_YI, 5, _col)
+        button_sheet_ZHONG_GONG_YANG_HOU_YI = QPushButton("种公羊后裔表")
+        button_sheet_ZHONG_GONG_YANG_HOU_YI.clicked.connect(
+            button_sheet_ZHONG_GONG_YANG_HOU_YI_clicked
+        )
+        _layout.addWidget(button_sheet_ZHONG_GONG_YANG_HOU_YI, 6, _col)
 
 
 if __name__ == "__main__":

@@ -1,33 +1,33 @@
 import mysql.connector
 from mysql.connector import errorcode
-from sheet import *
+from Sheet.sheet import *
 
 
-class CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog(CSheet):
+class CSheet_ZHONG_MU_YANG_HOU_YI_Dialog(CSheet):
     def __init__(self, parent=None):
-        super(CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog, self).__init__(parent)
+        super(CSheet_ZHONG_MU_YANG_HOU_YI_Dialog, self).__init__(parent)
 
         self.USER=parent.USER
         self.PASSWD=parent.PASSWD
 
-        text, ok = QInputDialog.getText(self, '种公羊后裔表', '请输入公羊号：', QLineEdit.Normal)
+        text, ok = QInputDialog.getText(self, '种母羊后裔表', '请输入母羊号：', QLineEdit.Normal)
 
         if ok and text and not text.isspace():
             self.table_sheet.setColumnCount(9)
-            self.sheet_header = ['与配母羊', '胎次', '产羔', '活羔', '羊羔编号', '羊羔性别', '羊羔出生重', '羊羔断奶重', '羊羔六月重',
-                                 '羊羔去向']
+            self.sheet_header=['与配公羊', '胎次', '产羔', '活羔', '羊羔编号', '羊羔性别', '羊羔出生重', '羊羔断奶重', '羊羔六月重',
+                               '羊羔去向']
             self.table_sheet.setHorizontalHeaderLabels(self.sheet_header)
             self.table_sheet.setRowCount(1)
 
-            self.sheet_ZHONG_GONG_YANG_HOU_YI(text)
-
-            self.setWindowTitle('种公羊后裔表')
+            self.sheet_ZHONG_MU_YANG_HOU_YI(text)
+            
+            self.setWindowTitle('种母羊后裔表')
             self.show()
         else:
             if ok:
-                QMessageBox.information(self, '输入错误', '无公羊号输入。')
+                QMessageBox.information(self, '输入错误', '无母羊号输入。')
 
-    def sheet_ZHONG_GONG_YANG_HOU_YI(self, text):
+    def sheet_ZHONG_MU_YANG_HOU_YI(self, text):
         try:
             cnx = mysql.connector.connect(user=self.USER,
                                           password=self.PASSWD,
@@ -37,7 +37,7 @@ class CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog(CSheet):
             cursor_YANG = cnx.cursor(buffered=True)
 
             cursor_CHAN_GAO.execute(
-                'select chan_gao_hao,mu_yang_hao,tai_ci,chan_gao,huo_gao from chan_gao where gong_yang_hao="'
+                'select chan_gao_hao,gong_yang_hao,tai_ci,chan_gao,huo_gao from chan_gao where mu_yang_hao="'
                 + text + '"')
             for CHAN_GAO_info_item in cursor_CHAN_GAO:
                 # print(CHAN_GAO_info_item)
@@ -59,10 +59,12 @@ class CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog(CSheet):
                                     self.table_sheet.rowCount() - 1,
                                     index + 4,
                                     QTableWidgetItem(str(YANG_info_item[index])))
-                        self.table_sheet.setRowCount(self.table_sheet.rowCount() + 1)
+                        self.table_sheet.setRowCount(
+                            self.table_sheet.rowCount() + 1)
                         YANG_info_item = cursor_YANG.fetchone()
                 else:
-                    self.table_sheet.setRowCount(self.table_sheet.rowCount() + 1)
+                    self.table_sheet.setRowCount(
+                        self.table_sheet.rowCount() + 1)
             cursor_CHAN_GAO.close()
             cursor_YANG.close()
             cnx.close()

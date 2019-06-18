@@ -1,6 +1,6 @@
 import mysql.connector
 from mysql.connector import errorcode
-from sheet import *
+from Sheet.sheet import *
 
 
 class CSheet_YU_ZHONG_JI_LU_Dialog(CSheet):
