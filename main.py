@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import (
     QLabel,
     QMessageBox,
     QPushButton,
-    QWidget
+    QWidget,
 )
 
 from Add import CAdd_CHAN_GAO_Dialog, CAdd_YANG_Dialog, add_from_sheet
@@ -21,7 +21,7 @@ from Sheet import (
     CSheet_CHENG_ZHONG_JI_LU_Dialog,
     CSheet_YU_ZHONG_JI_LU_Dialog,
     CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog,
-    CSheet_ZHONG_MU_YANG_HOU_YI_Dialog
+    CSheet_ZHONG_MU_YANG_HOU_YI_Dialog,
 )
 from utils import CLogin_Database_Dialog, DateDialog
 
@@ -183,7 +183,10 @@ class CMainWindow(QWidget):
                 CSheet_CHENG_ZHONG_JI_LU_Dialog(begin_date, end_date, self)
 
         def button_sheet_YU_ZHONG_JI_LU_clicked():
-            CSheet_YU_ZHONG_JI_LU_Dialog(self)
+            date_dialog = DateDialog(self)
+            if date_dialog.exec() == QDialog.Accepted:
+                begin_date, end_date = date_dialog.get_result()
+                CSheet_YU_ZHONG_JI_LU_Dialog(begin_date, end_date, self)
 
         def button_sheet_ZHONG_MU_YANG_HOU_YI_clicked():
             CSheet_ZHONG_MU_YANG_HOU_YI_Dialog(self)

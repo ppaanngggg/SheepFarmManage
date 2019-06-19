@@ -28,3 +28,4 @@ create table yang
 	zhou_sui_zhong float(10,1),
 	qu_xiang char(20)
 );
+create index er_hao_index on yang(er_hao);
