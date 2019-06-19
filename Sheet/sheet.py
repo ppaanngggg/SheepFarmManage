@@ -1,11 +1,11 @@
 import xlsxwriter
 from PyQt5.QtWidgets import (
     QAbstractItemView,
-    QTableWidget,
-    QPushButton,
-    QVBoxLayout,
     QDialog,
     QFileDialog,
+    QPushButton,
+    QTableWidget,
+    QVBoxLayout
 )
 
 
@@ -24,6 +24,8 @@ class CSheet(QDialog):
         self.layout_sheet.addWidget(self.button_sheet)
 
         self.setLayout(self.layout_sheet)
+        self.setMinimumWidth(800)
+        self.setMinimumHeight(600)
 
     def save_sheet(self):
         str_path, str_filter = QFileDialog.getSaveFileName(

@@ -1,6 +1,7 @@
 import logging
 
 import mysql.connector
+from mysql.connector import errorcode
 from PyQt5.QtWidgets import (
     QApplication,
     QDialog,
@@ -9,9 +10,8 @@ from PyQt5.QtWidgets import (
     QLabel,
     QMessageBox,
     QPushButton,
-    QWidget,
+    QWidget
 )
-from mysql.connector import errorcode
 
 from Add import CAdd_CHAN_GAO_Dialog, CAdd_YANG_Dialog, add_from_sheet
 from Edit import CEdit_CHAN_GAO_Dialog, CEdit_YANG_Dialog
@@ -21,7 +21,7 @@ from Sheet import (
     CSheet_CHENG_ZHONG_JI_LU_Dialog,
     CSheet_YU_ZHONG_JI_LU_Dialog,
     CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog,
-    CSheet_ZHONG_MU_YANG_HOU_YI_Dialog,
+    CSheet_ZHONG_MU_YANG_HOU_YI_Dialog
 )
 from utils import CLogin_Database_Dialog, DateDialog
 
@@ -92,19 +92,19 @@ class CMainWindow(QWidget):
         """
 
         def button_add_from_sheet_clicked():
-            str_path, str_filter = QFileDialog.getOpenFileName(
+            str_path, _ = QFileDialog.getOpenFileName(
                 self, "从表格导入数据", "", "Excel Files (*.xls)"
             )
             if str_path and not str_path.isspace():
                 add_from_sheet(str_path, self)
 
         def button_add_CHAN_GAO_clicked():
-            self.add_CHAN_GAO_dialog = CAdd_CHAN_GAO_Dialog(self)
-            self.add_CHAN_GAO_dialog.show()
+            add_CHAN_GAO_dialog = CAdd_CHAN_GAO_Dialog(self)
+            add_CHAN_GAO_dialog.show()
 
         def button_add_YANG_clicked():
-            self.add_YANG_dialog = CAdd_YANG_Dialog(self)
-            self.add_YANG_dialog.show()
+            add_YANG_dialog = CAdd_YANG_Dialog(self)
+            add_YANG_dialog.show()
 
         _layout.addWidget(QLabel("添加数据："), 0, _col)
         _layout.addWidget(QLabel(), 1, _col)
@@ -128,17 +128,13 @@ class CMainWindow(QWidget):
             date_dialog = DateDialog(self)
             if date_dialog.exec() == QDialog.Accepted:
                 begin_date, end_date = date_dialog.get_result()
-                self.search_CHAN_GAO_dialog = CSearch_CHAN_GAO_Dialog(
-                    begin_date, end_date, self
-                )
+                CSearch_CHAN_GAO_Dialog(begin_date, end_date, self)
 
         def button_search_YANG_clicked():
             date_dialog = DateDialog(self)
             if date_dialog.exec() == QDialog.Accepted:
                 begin_date, end_date = date_dialog.get_result()
-                self.search_YANG_dialog = CSearch_YANG_Dialog(
-                    begin_date, end_date, self
-                )
+                CSearch_YANG_Dialog(begin_date, end_date, self)
 
         _layout.addWidget(QLabel("查询数据："), 0, _col)
         _layout.addWidget(QLabel(), 1, _col)
@@ -155,10 +151,10 @@ class CMainWindow(QWidget):
         """
 
         def button_edit_CHAN_GAO_clicked():
-            self.edit_CHAN_GAO_dialog = CEdit_CHAN_GAO_Dialog(self)
+            CEdit_CHAN_GAO_Dialog(self)
 
         def button_edit_YANG_clicked():
-            self.edit_YANG_dialog = CEdit_YANG_Dialog(self)
+            CEdit_YANG_Dialog(self)
 
         _layout.addWidget(QLabel("修改数据："), 0, _col)
         _layout.addWidget(QLabel(), 1, _col)
@@ -178,25 +174,22 @@ class CMainWindow(QWidget):
             date_dialog = DateDialog(self)
             if date_dialog.exec() == QDialog.Accepted:
                 begin_date, end_date = date_dialog.get_result()
-                self.sheet_CHAN_GAO_JI_LU_dialog = CSheet_CHAN_GAO_JI_LU_Dialog(
-                    begin_date, end_date, self
-                )
+                CSheet_CHAN_GAO_JI_LU_Dialog(begin_date, end_date, self)
 
         def button_sheet_CHENG_ZHONG_JI_LU_clicked():
-            self.sheet_CHENG_ZHONG_JI_LU_dialog = CSheet_CHENG_ZHONG_JI_LU_Dialog(self)
+            date_dialog = DateDialog(self)
+            if date_dialog.exec() == QDialog.Accepted:
+                begin_date, end_date = date_dialog.get_result()
+                CSheet_CHENG_ZHONG_JI_LU_Dialog(begin_date, end_date, self)
 
         def button_sheet_YU_ZHONG_JI_LU_clicked():
-            self.sheet_YU_ZHONG_JI_LU_dialog = CSheet_YU_ZHONG_JI_LU_Dialog(self)
+            CSheet_YU_ZHONG_JI_LU_Dialog(self)
 
         def button_sheet_ZHONG_MU_YANG_HOU_YI_clicked():
-            self.sheet_ZHONG_MU_YANG_HOU_YI_dialog = CSheet_ZHONG_MU_YANG_HOU_YI_Dialog(
-                self
-            )
+            CSheet_ZHONG_MU_YANG_HOU_YI_Dialog(self)
 
         def button_sheet_ZHONG_GONG_YANG_HOU_YI_clicked():
-            self.sheet_ZHONG_GONG_YANG_HOU_YI_dialog = CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog(
-                self
-            )
+            CSheet_ZHONG_GONG_YANG_HOU_YI_Dialog(self)
 
         _layout.addWidget(QLabel("生成表格："), 0, _col)
         _layout.addWidget(QLabel(), 1, _col)
