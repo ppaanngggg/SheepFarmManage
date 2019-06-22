@@ -62,16 +62,16 @@ class CSheet_YU_ZHONG_JI_LU_Dialog(CSheet):
         self.setWindowTitle("育种记录表")
         self.show()
 
-    def _find_mu_yang_gong_yang_by_er_hao(self, _cnx, _er_hao):
+    def _find_mu_yang_gong_yang_by_er_hao_xing_bie(self, _cnx, _er_hao, _xing_bie):
         cur = _cnx.cursor()
         try:
             cur.execute(
                 """
                 SELECT c.mu_yang_hao,c.gong_yang_hao
                 FROM chan_gao AS c JOIN yang AS y ON c.chan_gao_hao=y.chan_gao_hao
-                WHERE y.er_hao="{}"
+                WHERE y.er_hao="{}" AND y.xing_bie="{}"
                 """.format(
-                    _er_hao
+                    _er_hao, _xing_bie
                 )
             )
             ret = cur.fetchone()
@@ -112,8 +112,8 @@ class CSheet_YU_ZHONG_JI_LU_Dialog(CSheet):
                 gong_yang = d[4]
                 tmp = (
                     d[:5]
-                    + self._find_mu_yang_gong_yang_by_er_hao(cnx, gong_yang)
-                    + self._find_mu_yang_gong_yang_by_er_hao(cnx, mu_yang)
+                    + self._find_mu_yang_gong_yang_by_er_hao_xing_bie(cnx, gong_yang, "公")
+                    + self._find_mu_yang_gong_yang_by_er_hao_xing_bie(cnx, mu_yang, "母")
                     + d[5:]
                 )
                 cur_row = self.table_sheet.rowCount() - 1
