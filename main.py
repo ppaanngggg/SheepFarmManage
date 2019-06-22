@@ -1,7 +1,6 @@
 import logging
 
 import mysql.connector
-from mysql.connector import errorcode
 from PyQt5.QtWidgets import (
     QApplication,
     QDialog,
@@ -12,11 +11,13 @@ from PyQt5.QtWidgets import (
     QPushButton,
     QWidget,
 )
+from mysql.connector import errorcode
 
 from Add import CAdd_CHAN_GAO_Dialog, CAdd_YANG_Dialog, add_from_sheet
 from Edit import CEdit_CHAN_GAO_Dialog, CEdit_YANG_Dialog
 from Search import CSearch_CHAN_GAO_Dialog, CSearch_YANG_Dialog
 from Sheet import (
+    YU_ZHONG_DateDialog,
     CSheet_CHAN_GAO_JI_LU_Dialog,
     CSheet_CHENG_ZHONG_JI_LU_Dialog,
     CSheet_YU_ZHONG_JI_LU_Dialog,
@@ -183,10 +184,12 @@ class CMainWindow(QWidget):
                 CSheet_CHENG_ZHONG_JI_LU_Dialog(begin_date, end_date, self)
 
         def button_sheet_YU_ZHONG_JI_LU_clicked():
-            date_dialog = DateDialog(self)
-            if date_dialog.exec() == QDialog.Accepted:
-                begin_date, end_date = date_dialog.get_result()
-                CSheet_YU_ZHONG_JI_LU_Dialog(begin_date, end_date, self)
+            dialog = YU_ZHONG_DateDialog(self)
+            if dialog.exec() == QDialog.Accepted:
+                begin_date, end_date, only_er_hao, xing_bie = dialog.get_result()
+                CSheet_YU_ZHONG_JI_LU_Dialog(
+                    begin_date, end_date, only_er_hao, xing_bie, self
+                )
 
         def button_sheet_ZHONG_MU_YANG_HOU_YI_clicked():
             CSheet_ZHONG_MU_YANG_HOU_YI_Dialog(self)

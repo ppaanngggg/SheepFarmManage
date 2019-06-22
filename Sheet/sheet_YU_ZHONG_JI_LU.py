@@ -1,12 +1,37 @@
 import mysql.connector
+from PyQt5.QtWidgets import QMessageBox, QTableWidgetItem, QComboBox, QLabel
 from mysql.connector import errorcode
-from PyQt5.QtWidgets import QMessageBox, QTableWidgetItem
 
-from Sheet.sheet import CSheet
+from utils.DATE import DateDialog
+from .sheet import CSheet
+
+
+class YU_ZHONG_DateDialog(DateDialog):
+    def __init__(self, parent=None):
+        super(YU_ZHONG_DateDialog, self).__init__(parent)
+
+        layout = self.layout()
+        layout.addWidget(QLabel("是否仅包含种羊？"), 2, 0)
+        self.only_er_hao = QComboBox()
+        self.only_er_hao.addItems(["是", "否"])
+        layout.addWidget(self.only_er_hao, 2, 1)
+        layout.addWidget(QLabel("性别："), 2, 2)
+        self.xing_bie = QComboBox()
+        self.xing_bie.addItems(["全部", "公", "母"])
+        layout.addWidget(self.xing_bie, 2, 3)
+
+    def get_result(self):
+        begin_date, end_date = super().get_result()
+        return (
+            begin_date,
+            end_date,
+            self.only_er_hao.currentText(),
+            self.xing_bie.currentText(),
+        )
 
 
 class CSheet_YU_ZHONG_JI_LU_Dialog(CSheet):
-    def __init__(self, begin_date, end_date, parent=None):
+    def __init__(self, begin_date, end_date, only_er_hao, xing_bie, parent=None):
         super(CSheet_YU_ZHONG_JI_LU_Dialog, self).__init__(parent)
 
         self.USER = parent.USER
@@ -32,7 +57,7 @@ class CSheet_YU_ZHONG_JI_LU_Dialog(CSheet):
         self.table_sheet.setHorizontalHeaderLabels(self.sheet_header)
         self.table_sheet.setRowCount(1)
 
-        self.sheet_YU_ZHONG_JI_LU(begin_date, end_date)
+        self.sheet_YU_ZHONG_JI_LU(begin_date, end_date, only_er_hao, xing_bie)
 
         self.setWindowTitle("育种记录表")
         self.show()
@@ -57,8 +82,21 @@ class CSheet_YU_ZHONG_JI_LU_Dialog(CSheet):
         finally:
             cur.close()
 
-    def sheet_YU_ZHONG_JI_LU(self, _begin_date, _end_date):
+    def sheet_YU_ZHONG_JI_LU(self, _begin_date, _end_date, only_er_hao, xing_bie):
         try:
+            query = """
+                SELECT y.er_hao,y.bian_hao,c.chan_gao_ri_qi,c.mu_yang_hao,c.gong_yang_hao,
+                    c.huo_gao,y.chu_sheng_zhong,y.duan_nai_zhong,y.liu_yue_zhong,y.zhou_sui_zhong
+                FROM yang AS y JOIN chan_gao AS c ON y.chan_gao_hao=c.chan_gao_hao
+                WHERE c.chan_gao_ri_qi>="{}" AND c.chan_gao_ri_qi<="{}"
+            """.format(
+                _begin_date, _end_date
+            )
+            if only_er_hao == "是":
+                query += " AND y.er_hao IS NOT NULL"
+            if xing_bie != "全部":
+                query += " AND y.xing_bie='{}'".format(xing_bie)
+
             cnx = mysql.connector.connect(
                 user=self.USER,
                 password=self.PASSWD,
@@ -67,16 +105,7 @@ class CSheet_YU_ZHONG_JI_LU_Dialog(CSheet):
             )
             cur = cnx.cursor(buffered=True)
 
-            cur.execute(
-                """
-                SELECT y.er_hao,y.bian_hao,c.chan_gao_ri_qi,c.mu_yang_hao,c.gong_yang_hao,
-                    c.huo_gao,y.chu_sheng_zhong,y.duan_nai_zhong,y.liu_yue_zhong,y.zhou_sui_zhong
-                FROM yang AS y JOIN chan_gao AS c ON y.chan_gao_hao=c.chan_gao_hao
-                WHERE c.chan_gao_ri_qi>="{}" AND c.chan_gao_ri_qi<="{}"
-                """.format(
-                    _begin_date, _end_date
-                )
-            )
+            cur.execute(query)
 
             for d in cur:
                 mu_yang = d[3]
