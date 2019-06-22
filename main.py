@@ -14,7 +14,7 @@ from PyQt5.QtWidgets import (
 from mysql.connector import errorcode
 
 from Add import CAdd_CHAN_GAO_Dialog, CAdd_YANG_Dialog, add_from_sheet
-from Edit import CEdit_CHAN_GAO_Dialog, CEdit_YANG_Dialog
+from Edit import CEdit_CHAN_GAO_Dialog, CEdit_YANG_Dialog, CEdit_YANG_by_er_hao_Dialog
 from Search import CSearch_CHAN_GAO_Dialog, CSearch_YANG_Dialog
 from Sheet import (
     YU_ZHONG_DateDialog,
@@ -157,6 +157,9 @@ class CMainWindow(QWidget):
         def button_edit_YANG_clicked():
             CEdit_YANG_Dialog(self)
 
+        def button_edit_YANG_by_er_hao_clicked():
+            CEdit_YANG_by_er_hao_Dialog(self)
+
         _layout.addWidget(QLabel("修改数据："), 0, _col)
         _layout.addWidget(QLabel(), 1, _col)
         button_edit_CHAN_GAO = QPushButton("修改产羔记录")
@@ -165,6 +168,9 @@ class CMainWindow(QWidget):
         button_edit_YANG = QPushButton("修改湖羊数据")
         button_edit_YANG.clicked.connect(button_edit_YANG_clicked)
         _layout.addWidget(button_edit_YANG, 3, _col)
+        button_edit_YANG_by_er_hao = QPushButton("通过耳号修改湖羊")
+        button_edit_YANG_by_er_hao.clicked.connect(button_edit_YANG_by_er_hao_clicked)
+        _layout.addWidget(button_edit_YANG_by_er_hao, 4, _col)
 
     def create_sheet_plane(self, _layout, _col=3):
         """

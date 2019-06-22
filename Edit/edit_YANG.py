@@ -19,7 +19,7 @@ class CEdit_YANG_Dialog(CYANG_Dialog):
         self.USER = parent.USER
         self.PASSWD = parent.PASSWD
 
-        text, ok = QInputDialog.getText(self, "修改湖羊数据", "请输入编号：", QLineEdit.Normal)
+        text, ok = QInputDialog.getText(self, "修改湖羊数据", "请输入号码：", QLineEdit.Normal)
 
         if ok and text and not text.isspace():
             YANG_info = self.get_YANG_info(text)
@@ -94,7 +94,6 @@ class CEdit_YANG_Dialog(CYANG_Dialog):
 
             for YANG_info_item in cursor:
                 YANG_info.append(YANG_info_item)
-            # print(YANG_info)
 
             cursor.close()
             cnx.close()
@@ -123,6 +122,36 @@ class CEdit_YANG_Dialog(CYANG_Dialog):
             cursor.close()
             cnx.close()
             return True
+        except mysql.connector.Error as err:
+            if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+                QMessageBox.information(self, "数据库错误", "登录数据库错误。")
+            elif err.errno == errorcode.ER_BAD_DB_ERROR:
+                QMessageBox.information(self, "数据库错误", "数据库不存在。")
+            elif err.errno == errorcode.ER_NO_SUCH_TABLE:
+                QMessageBox.information(self, "数据库错误", "表单不存在。")
+            else:
+                QMessageBox.information(self, "数据库错误", str(err))
+
+
+class CEdit_YANG_by_er_hao_Dialog(CEdit_YANG_Dialog):
+    def get_YANG_info(self, text):
+        YANG_info = []
+        try:
+            cnx = mysql.connector.connect(
+                user=self.USER,
+                password=self.PASSWD,
+                database="pang_da_nong_ye",
+                host="127.0.0.1",
+            )
+            cursor = cnx.cursor()
+            cursor.execute('select * from yang where er_hao="' + text + '"')
+
+            for YANG_info_item in cursor:
+                YANG_info.append(YANG_info_item)
+
+            cursor.close()
+            cnx.close()
+            return YANG_info
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 QMessageBox.information(self, "数据库错误", "登录数据库错误。")

@@ -1,2 +1,2 @@
 from .edit_CHAN_GAO import CEdit_CHAN_GAO_Dialog
-from .edit_YANG import CEdit_YANG_Dialog
+from .edit_YANG import CEdit_YANG_Dialog, CEdit_YANG_by_er_hao_Dialog
